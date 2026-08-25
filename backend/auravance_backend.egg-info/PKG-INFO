@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: auravance-backend
+Version: 0.1.0
+Summary: Backend foundation for Auravance predictive maintenance platform
+Requires-Python: >=3.11
+Requires-Dist: fastapi>=0.115.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: joblib>=1.4.2
+Requires-Dist: pandas>=2.2.3
+Requires-Dist: pypdf>=4.3.1
+Requires-Dist: py7zr>=0.22.0
+Requires-Dist: scikit-learn>=1.5.2
+Requires-Dist: uvicorn[standard]>=0.30.0

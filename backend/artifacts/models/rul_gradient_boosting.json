@@ -1,0 +1,64 @@
+{
+  "artifact_schema_version": 1,
+  "task": "rul_regression",
+  "model_version": "rul-hgb-cmapss-v1.0.0",
+  "algorithm": "HistGradientBoostingRegressor",
+  "trained_at": "2026-08-07T14:42:39.942749+00:00",
+  "source_dataset": "c_mapss/train_fd001-fd004.csv",
+  "feature_names": [
+    "temperature",
+    "vibration",
+    "pressure",
+    "current"
+  ],
+  "source_columns": [
+    "sensor_2",
+    "sensor_4",
+    "sensor_11",
+    "sensor_15"
+  ],
+  "source_transform": {
+    "medians": {
+      "sensor_2": 605.81,
+      "sensor_4": 1269.35,
+      "sensor_11": 44.91,
+      "sensor_15": 9.0549
+    },
+    "iqr_scales": {
+      "sensor_2": 92.38999999999999,
+      "sensor_4": 275.4100000000001,
+      "sensor_11": 5.330000000000005,
+      "sensor_15": 0.9045000000000005
+    }
+  },
+  "runtime_profile": {
+    "temperature": {
+      "center": 70.0,
+      "scale": 8.0
+    },
+    "vibration": {
+      "center": 0.3,
+      "scale": 0.2
+    },
+    "pressure": {
+      "center": 5.0,
+      "scale": 0.8
+    },
+    "current": {
+      "center": 9.0,
+      "scale": 2.5
+    }
+  },
+  "rul_cap_cycles": 125,
+  "hours_per_cycle": 2.0,
+  "deployment_safety_envelope": "min(model_hours, 250 / (1 + 0.8 * max_abs_runtime_z))",
+  "metrics": {
+    "mae_cycles": 15.5789,
+    "rmse_cycles": 21.0872,
+    "r2": 0.7369,
+    "evaluation_rows": 32800.0,
+    "evaluation_engines": 142.0
+  },
+  "training_rows": 127559,
+  "training_engines": 567
+}

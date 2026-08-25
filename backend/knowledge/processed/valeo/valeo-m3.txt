@@ -1,0 +1,1743 @@
+Copyright © 2017 Valeo Japan CO., LTD. All rights reserved.
+SERVICE MANUAL
+Valeo TM21Compressor
+
+
+-1-
+Foreword
+This service manual has been elaborated to help 
+service personnel to provide efficient and correct 
+service on the TM21 compressors for heavy duty air 
+conditioning. Can be used with the following HFC 
+refrigerants: R134a, R1234yf, R404a and R452a
+This manual includes the operation specifications, 
+procedures for disassembly, reassembly and 
+inspection of the compressor.
+Service tool parts are not available for sale.
+Drawings are available in the last pages of this service 
+manual. 
+The contents of this manual, including illustrations, 
+drawings and specifications were the latest available 
+at the time of printing.
+Valeo Japan reserves the right to make changes in 
+specifications and procedures at any time without 
+notice.
+VALEO JAPAN CO., LTD.
+The following warning signs are used in this service manual.
+These are extremely important to ensure safe operation and to prevent body injuries and 
+property damage.
+They must be fully understood before starting the air conditioner maintenance.
+WARNING! Maintenance must be properly done to avoid serious injury risks.
+CAUTION! Improper maintenance can result in injury or property damage.
+WARNINGS
+The following marks are used in this service manual to facilitate correct air conditioner 
+maintenance.
+Advice  Procedures necessary to ensure the best air conditioner maintenance.
+Note  Information to optimize the air conditioner maintenance.
+MEANING OF MARKS
+
+-2-
+Contents
+1-  Product description.................................................................................   3
+2-  Operation precautions............................................................................  12
+3-  Handling instructions..............................................................................  13
+Maintenance precautions...........................................................................  13
+Compressor handling.................................................................................  14 
+Compressor removal..................................................................................  14
+Oil return operation...................................................................................  15 
+Oil handling..............................................................................................  15
+Oil contamination......................................................................................  16
+Oil check...................................................................................................  16 
+Replacement of components......................................................................  17
+Running-in operation.................................................................................  18
+Leak test...................................................................................................  19 
+4-  Troubleshooting ....................................................................................  23
+5-  Tightening torques..................................................................................  29
+6-  Service procedures - Magnetic clutch...................................................   30
+7-  Services procedures - Shaft seal assembly ...........................................  34
+8-  Services procedures - Cylinder heads....................................................  37
+Cylinder heads (Front & Rear)....................................................................  37
+Reassembly.............................................................................................   39
+9-  Service tools............................................................................................  41
+10-Service parts ........................................................................................... 42 
+
+-3-
+1-Product description - Compressor
+MODEL TM21
+TECHNOLOGY Heavy Duty Swash Plate
+DISPLACEMENT 215cc / 13 in3 per rev.
+NUMBER OF CYLINDERS 10 (5 double-headed pistons)
+REVOLUTION RANGE 700-6000 rpm
+DIRECTION OF ROTATION Clockwise or counter clockwise (depending on clutch type) 
+BORE 32 mm (1.26 in)
+STROKE 26.7 mm (1.05 in)
+SHAFT SEAL Lip seal type
+REFRIGERANT HFC-134a
+OIL (QUANTITY) ZXL 100PG PAG OIL (180 cc/11 in3) 
+WEIGHT (w/o clutch) 5.1 kg / 11.3 lbs
+DIMENSIONS (w/o clutch)
+Length - Width - Height
+199 - 127 - 148 (mm)        
+7.8 - 5 - 5.8 (in) 
+MOUNTING Direct (side or base)
+Compressors
+Valeo TM21 Application limits for HFC-134a
+te 
+tc 
+Saturated evaporating conditions
+Saturated condensing conditions
+PSIA PSIG oF MPaA MPaG oC
+314 299 160 2.17 2.06 71
+191 177 122 1.32 1.22 50
+100 85 79 0.69 0.58 26
+-10 14 oC
+0.10 0.37 MPaG
+0.20 047 MPaA
+14 57 oF
+14 54 PSIG
+29 69 PSIA
+tc  : Condensing  temperature 
+te  : Evaporating gas temperature
+
+-4-
+1-Product description - Magnetic clutch
+Magnetic clutch*
+VALEO TM21 is available either as a compressor and magnetic clutch assembly or as a compressor body that 
+customers can fit with compatible magnetic clutches. The magnetic clutch design Valeo has been promoting 
+for more than 20 years is now gradually adopted by major market actors.
+Our compressors and magnetic clutches have successfully passed the thousand hours of long validation tests in 
+the Valeo Compressors research center laboratory . Operational excellence was demonstrated during hot season 
+testing on the field under challenging climates in the most stressful conditions.
+Our robust magnetic clutch provides the best way to reduce fuel consumption without using additional unloading 
+devices that decrease significantly the efficiency and durability of the compressor. The range of Valeo magnetic 
+clutches ensures an unmatched reliability and the longest durability that perfectly matches the Valeo  TM21 
+compressor qualities.
+*Please note that the maintenance procedures introduced in this service manual apply only to magnetic clutches 
+provided by Valeo.
+TYPE Electromagnetic single-plate dry clutch
+RATED VOLTAGE 12 VDC or 24 VDC
+POWER CONSUMPTION 50 W maximum
+STATIC TORQUE 40 N.m (min.) after burnishing : 59 N.m (min)
+DIRECTION OF ROTATION Clockwise or counter clockwise (depending on clutch type)
+WEIGHT Approx 3.0 kg {6 lbs}
+V-BELT TYPE V-groove (A or B) or V-ribbed (PK)
+Specifications TM21
+
+-5-
+1-Product description - Name Plate
+Name plate
+To ensure that the compressor operates smoothly, 
+respect carefully the indications written on the 
+name plate.
+COMP .  TYPE
+PART NO.
+SERIAL NO.
+OIL
+LEAK TEST
+REFRIG.
+M A D E  I N  J A PA N
+TM21
+X X X X X X X   X
+X X X X X X X X X X
+ZXL 100PG 180 cm3
+HIGH SIDE 2.9MPaG
+LOW SIDE 1.5MPaG
+HFC-134a
+
+
+-6-
+1-Product description - Dimensions TM21
+5PSRVF : 5 ± 1 N m
+2.9
+23.5
+1010
+1010
+135
+10 10
+1010
+85.6
+16
+"QQSPY230
+Ø 110.5
+145Ø
+CLUTCH GAP 0.3~0.7
+8.8 ± 0.1Ø8-
+124Ø
+Ø 127
+12.7 -0.3
+87 ± 0.254.55 ± 0.5
+92 ± 0.2
+36 ° ± 1 °30 '
+5PSRVF : 15 -2  N m
+5PSRVF : 9.8 -2  N m
+50
+°
+33
+64( )
+29
+46.5R
+47.6 ± 0.1
+23.8 ± 0.1
+128 ± 0.2
+80 ± 0.2
+
+-7-
+1-Product description - Exploded view
+1
+2
+3 4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+25
+2726
+17
+15
+18
+19
+12
+20
+21
+22
+23 24
+1. Center bolt
+2. Armature assembly
+3. Adjusting shim
+4. Snap ring
+5. Pulley assembly
+6. Screw
+7. Field coil
+8. Bolt
+9. Gasket
+10. Shaft Seal assembly
+11. Front cilynder head
+12. O-Ring
+13. Gasket
+14. Valve plate assembly
+15.Suction valve
+16. Pin
+17. Cylinder shaft assembly
+18. Valve plate assenbly
+19. Gasket
+20. Rear cylinder head
+21. O-ring 
+22. Plug
+23. O-ring
+24. Relief Valve
+25. O-ring
+26. Shipping plate
+27. Bolt
+
+-8-
+1-Product description - Performance 
+The performance data below were measured under the following conditions:
+• Compressor speed: 1450 rpm
+• Suction Gas Temperature: 20°C
+Valeo TM21 conversion factors
+The performance data at different rotation speed  can be approximated with the conversion factors below.
+Cooling capacity Q (kW) & Power consumption P (kW)
+Conditions Evaporating Temperature (°C)
+Condensing 
+Temperature 
+(°C)
+Pd
+(MPaG)
+-10 -5 0 5 10 12.5
+Ps (MPaG)
+0.10 0.15 0.19 0.24 0.32 0.35
+40 0.91
+Q (kW) 5.88 7.54 9.59 12.10 15.06 16.86
+P (kW) 2.05 2.28 2.49 2.68 2.83 2.89
+50 1.21
+Q (kW) 5.02 6.48 8.24 10.31 12.84 14.17
+P (kW) 2.21 2.47 2.73 2.98 3.20 3.29
+60 1.58
+Q (kW) 4.09 5.38 6.90 8.63 10.75 11.92
+P (kW) 2.34 2.66 2.97 3.26 3.50 3.67
+Compressor speed (rpm)
+Conversion factors
+1000 1450
+0.0
+0.5
+1.0
+1.5
+2.0
+2.5
+3.0
+2000 3000 4000
+3.5
+0 5000
+Q
+P
+
+-9-
+1-Product description - Swash plate system
+Valeo TM21 are 10-cylinder swash plate type 
+compressors. With this type of compressor, the 
+cylinders and pistons are arranged axially along the 
+drive shaft.
+The pistons operate within the cylinders and 
+are driven by a swash plate to perform suction, 
+compression and discharge.
+Swash plate system
+The drive shaft, which is driven by the engine 
+through the magnetic clutch, is equipped with a 
+swash plate.
+The drive shaft is supported by two radial bearings 
+and two thrust bearings.
+The swash plate is rotated by the drive shaft, and 
+moves the pistons back and forth.
+Piston Drive System 
+The pistons in the cylinders are mounted on the 
+swash plate through hemispherical shoes.
+Each piston has a compression head at each end. The 
+rotation of the swash plate results in a reciprocating 
+piston movement parallel to the drive shaft.
+The cylinders, which are arranged a t 72° intervals 
+around the drive shaft, are each divided into 2 
+chambers, providing 5 front and 5 rear bores.
+As each piston performs suction and compression at 
+either end, the compressor operates as a 10-cylinder 
+compressor.
+Radial bearing
+Thrust bearing
+Suction
+CompressionCompression
+Suction
+Ball Piston
+
+COMP .  TYPE
+PART NO.
+SERIAL NO.
+OIL
+LEAK TEST
+REFRIG.
+M A D E  I N  J A PA N
+TMXX
+X X X X X X X   X
+X X X X X X X X X X
+ZXL 100PG 180 cm3
+HIGH SIDE 2.9MPaG
+LOW SIDE 1.5MPaG
+HFC-134a
+-10-
+1-Product description - General
+Compressor
+1. The direction of rotation is clockwise or counter 
+clockwise.
+2. The compressor must be operated under the 
+conditions shown in the operation condition 
+table on the left.
+3. Inclination limit at installation
+The compressor must be installed on the vehicle 
+within the range shown to the left.
+Full charge of compressor oil 
+Each compressor is delivered filled with a specified 
+quantity of compressor oil as described on its label. 
+The total amount of oil your air conditioning system 
+requires is provided by the system designer based 
+on Valeo oil amount guidelines. (cf. p42)
+Item Condition
+Surrounding 
+temperature Under 120°C (248°F)
+Speed
+Minimum: 700 r/min
+Maximum: 6000 r/min
+Continuous: 6000 r/min
+Pressure Maximum: 2.07  MPaG
+{22.1 kgf/cm², 299 psig}
+45˚ 45˚
+10˚
+10˚
+Operation condition table 
+CAUTION!
+The A/C cycle components must be 
+designed so that the pressure in the cycle 
+does not exceed 2.07 MPaG {22.1 kgf/cm2, 
+299 psig}
+In the event of compressor locking-up, the 
+clutch temperature may increase to very 
+high temperatures. 
+Please consider this when locating burnable 
+objects near compressor.
+CAUTION!
+
+-11-
+1-Product description - General 
+Compressor bracket
+1. Install the bracket securely on the chassis frame 
+or engine body . As the engine vibrations may be 
+severe, the bracket and mounting bolts must be 
+installed securely .
+2. Vibration resistance
+There must not be any resonance under 250 HZ. 
+Magnetic clutch
+1. Voltage
+ DC 24 V
+ The terminal voltage of the magnetic clutch 
+must exceed 21 V .
+ DC 12 V
+ The terminal voltage of the magnetic clutch 
+must exceed 10.5 V .
+2. Ratio of magnetic clutch to drive pulley
+• When the compressor is driven from the pulley 
+drive of the vehicle, the magnetic clutch to drive 
+pulley ratio should avoid the range 1: 0.92-1.08 
+to limit vibration and resonance.
+• The compressor speed must not exceed the 
+specified speed.
+3. Pulley alignment tolerance is less than 1mm 
+(0.04 in).
+4. Pulley groove: V-groove or V-ribbed.
+5. The belt tension must be adjusted to the tension 
+specified by the belt maker.
+CAUTION!
+Pulley ratio is the ratio of the magnetic 
+clutch diameter to the drive pulley diameter.
+Magnetic clutch
+Idle pulley
+Drive pulley
+1 mm
+
+-12-
+2-Operation precautions
+1. During the off season of the air conditioner, 
+operate the compressor for a few minutes once 
+a week.
+2. Do not drive through water. Water may damage 
+the magnetic clutch, thus preventing normal 
+operation.
+3. Always charge the A/C system with the specified 
+quantity of refrigerant.
+4. Keep the compressor clear of water projection 
+while cleaning the vehicle.
+
+-13-
+3-Handling instructions
+Safety glasses
+Gasoline inflammables
+Gloves
+Maintenance precautions
+Work area
+As the components of air conditioners are particularly 
+sensitive to moisture, dirt and rust, always observe 
+the following:
+• Work indoors whenever possible
+• Select a flat ground work area
+• Keep the work area clean
+• Select a work area with adequate ventilation.
+CAUTION!
+Refrigerant itself is not harmful, but 
+excessive accumulation in a closed area can 
+cause oxygen deficiency.
+• Keep open flame and inflammables away from 
+the vehicle in which the air conditioner is being 
+installed. 
+(Fire is particularly dangerous during the gas 
+leak inspection following installation)
+WARNING!
+Contact with flame and high temperatures 
+can generate toxic gases.
+Refrigerant handling
+WARNING!
+Direct contact with refrigerant can cause 
+frostbite or blindness.
+Always wear safety glasses and protective 
+gloves.
+Do not work with refrigerant close to your 
+face.
+1. Do not misidentify refrigerants
+If an HFC-134a air conditioning system is mistakenly 
+charged with another refrigerant, serious problems 
+such as compressor seizing may occur. Therefore, 
+confirm before charging with refrigerant that the 
+type of air conditioning system is an HFC-134a 
+system.
+
+-14-
+3-Handling instructions 
+FILL
+AUTO
+Do not release refrigerant into 
+the air
+Recovery unit
+2. Do not release refrigerant into the air
+Although HFC-134a is not subject to CFC regulations, 
+it can have an effect on global warming and so 
+should not be released into the air. When removing 
+refrigerant from the air conditioner system, always 
+use a refrigerant recovery unit made specifically for 
+HFC-134a.
+Compressor handling
+Do not strike or unecessarily turn the compressor 
+upside down. If the compressor is knocked over or 
+turned upside down during handling or installation, 
+rotate the armature plate 5 or 6 times by hand to 
+circulate the oil.
+Otherwise, oil in the cylinder during compressor 
+start-up will cause valve damage and reduce 
+durability .
+Compressor removal
+When the compressor is operational
+1. Perform the oil return operation (see p.15).
+2. Recover the refrigerant from the system using a 
+refrigerant recovery unit.
+3. Remove the compressor.
+4. Drain the oil from the compressor and close all 
+open connections immediately .
+5. Check the oil quantity and the degree of 
+contamination (see p.16).
+When the compressor is inoperable
+1. Recover the refrigerant from the system using 
+a refrigerant recovery unit if the shut-off valves 
+are to be removed with the compressor.
+2. Remove the compressor.
+3. Drain the oil from the compressor and close all 
+open connections immediately .
+4. Check the oil quantity and the degree of 
+contamination (see p.16).
+Oil return operation
+Refrigrant recovery
+Compressor removal
+Oil inspection 
+
+-15-
+3-Handling instructions
+AUT OON/OF F
+ECONDUAL
+0
+20.0□20.0□ Oil return operation
+Compressor oil mixed with refrigerant is circulating 
+in the air conditioning system.
+Perform the oil return operation to return this oil to 
+the compressor before removing components from 
+the system.
+1. Open the doors and windows and operate the 
+blower motor at maximum speed.
+2. Operate the vehicle engine at idling during at 
+least 20 minutes.
+Note: The maximum amount of oil cannot be 
+recovered at higher speeds. This operation also 
+requires a warm ambient temperature.
+Oil handling
+Oil specification
+Use only ZXL 100PG (DH-PS)
+Oil quantity inspection
+There is no particular need for frequent inspection or 
+replacement, although it is recommended to check 
+operating refrigerent pressures and oil levels at the 
+start of the season.
+Please replace the refrigerant and restore the system 
+oil and refrigerant charge to factory specifications if:
+• the AC system is opened for repair or replacement 
+of any component (e.g.: evaporator, condenser 
+or receiver drier)
+• any loss of charge - refrigerant or oil - is detected.
+Handling precautions
+1. The oil must be free from dust, metal filings, etc.
+2. Do not mix oils.
+3. The moisture content must not exceed 1,000 
+ppm. (PAG oil only)
+4. The oil easily absorbs moisture when the 
+container is open. Therefore always seal the 
+container immediately after use.
+Do not mix with other oils
+Cap the container immediately
+
+-16-
+3-Handling instructions
+Opacity
+Color change
+Foreign substances
+Metal filings
+Oil contamination
+Unlike engine oil, no cleaning agent is added to 
+the compressor oil. Even if the compressor is run 
+for a long period (approximately 1 season), the 
+oil never becomes turbid as long as there is noth-
+ing wrong with the compressor or its method of 
+use.  Inspect the extracted oil for any of the fol-
+lowing.
+• Increased opacity of the oil.
+• Color change to red.
+• Presence of foreign matter, metal filings, etc.
+Oil check
+The compressor oil must be checked as follows 
+when being charged into a used system.
+1. Perform the oil return operation (see page 
+15).
+2. Remove the compressor from the vehicle.
+3. Remove the oil filler plug and drain the oil 
+through the oil filler plug and the high and 
+low pressure connectors.
+4. Check the oil for contamination.
+5. Fill the compressor with the specified amount 
+of oil through the Suction port (see illustration 
+on the left).
+Full charge of compressor oil
+Each compressor is delivered with the specified 
+quantity of compressor oil, depending on the 
+type of air conditioning system.
+A label describing the amount of compressor oil is 
+attached to the compressor. 
+Charge specified quantity of 
+compressor oil
+COMP .  TYPE
+PART NO.
+SERIAL NO.
+OIL
+LEAK TEST
+REFRIG.
+M A D E  I N  J A PA N
+TMXX
+X X X X X X X   X
+X X X X X X X X X X
+ZXL 100PG 180 cm3
+HIGH SIDE 2.9MPaG
+LOW SIDE 1.5MPaG
+HFC-134a
+WARNING!
+When system (oil) contamination is 
+found during compressor replacement, 
+flush the A/C system with a fluid that 
+meets SAE J2670 and replace the drier (or 
+accumulator). 
+
+-17-
+Current
+Compressor 
+is kept
+Compressor 
+is replaced
+Factory 
+oil charge
+Amount 
+recovered
+Charging 
+amount
+Amount 
+to remove 
+from new 
+compressor
+TM21 180
+108 or 
+more 
+Same as 
+recovered
+180-(amount 
+recovered)
+Under 
+108 108 54
+3-Handling instructions
+unit: cm3 & cc
+CAUTION!
+The specified oil quantity differs, depending 
+on the type of air conditioner system. A 
+label describing the specified quantity is 
+attached to the compressor. 
+Additionally, all of the oil cannot be 
+removed when draining the compressor 
+as some will remain as an oil film on the 
+inside of the compressor and the system 
+components. Therefore, refer to the table 
+on the left when recharging the compressor 
+with oil. Excess oil adversely affects the 
+cooling capacity and the compressor.
+Replacement of components
+When replacing the system’ s component parts, 
+supply the following amount of oil to the com-
+pressor.
+Component mounted Amount of oil
+Evaporator 50 cm3 (3 cu in)
+Condenser 30  cm3 (6 cu in)
+Receiver drier 30 cm3 (1.8 cu in)
+After installing these component parts, check the 
+compressor oil. Refer to page 16.
+CAUTION!
+The oil filler plug O-ring must be replaced 
+with a new one.
+Current
+Compressor 
+is kept
+Compressor is 
+replaced
+Factory 
+oil charge
+Amount 
+recovered
+Charging 
+amount
+Amount 
+to remove 
+from new 
+compressor
+TM21 10.9
+6.6 or 
+more
+Same as 
+recovered
+10.9-(amount 
+recovered) 
+Under 6.6 6.6 3.2
+unit: cu in
+50cm3 (3 cu in)
+10cm3 (0.6 cu in)
+30cm3 (1.8cu in)
+
+-18-
+3-Handling instructions
+Flexible hose
+High pressure connector
+Low pressure 
+connector
+O N
+O F F (50 times)
+Running-in operation
+Whenever moving parts have been replaced, it is 
+necessary to run-in both the compressor and the 
+magnetic clutch.
+Compressor running-in
+Reassembled compressors must be run-in after 
+the leak test (see next page).
+1. Check that the compressor contains the speci-
+fied amount of oil.
+2. Interconnect the suction fitting and the dis -
+charge fitting with the flexible hose.
+3. Install the high pressure connector and the 
+low pressure connector to the ports and tight-
+en the bolts to the specified torque.
+4. Connect the two connector ports using a flex-
+ible hose.
+5. Run the compressor at 500 rpm for 30 min-
+utes to 60 minutes. This operation may be 
+performed by an electric motor or the engine 
+of an automobile.  
+6. Replace the oil.
+7. Repeat the leak test.
+Magnetic clutch running-in
+1. Install the clutch on the compressor.
+2. Install the compressor on the test bench, and 
+operate the compressor by running the sys -
+tem.
+3. Maintain the compressor speed at 700 rpm. 
+Operate the A/C switch through the ON/OFF 
+cycle at least 50 times (“ON” for 10 seconds 
+and “OFF”for 10 seconds).
+CAUTION!
+While the compressor is being run-in in step 
+3 above, check the outside temperature of 
+the front head. If the temperature exceeds 
+80°C (176°F), stop the running-in operation. 
+Resume the operation when the head has 
+cooled.
+
+-19-
+3-Handling instructions
+VALEO Japan Co Ltd,
+MADE IN JAPAN
+Air ConditioningCompressor
+FRAGILE
+UP
+FRAGILE
+UPParts
+No.
+www.valeocompressors.com
+Gas leak detector
+597001-1020
+Leak test
+The compressor must be checked for refrigerant 
+leaks after it is repaired.  The procedure is as fol-
+lows.
+1. Install the discharge and suctions caps on the 
+compressors 
+2. Fill the compressor with refrigerant gaz 
+through the suction port raising the pressure 
+at least to 0.4 MPaG (55.3 psig) 
+3. Check the compressor for leaks using a leak 
+detector (597001-1020).
+Storing a repaired compressor
+If it is necessary to store a repaired compressor 
+for some time before installation, evacuate the 
+compressor and fill it with dry nitrogen gas through 
+the suction fitting to raise the pressure to 49 ~ 150 
+kPa {0.5 ~ 1.5 kgf/cm
+2, 7.1 ~ 21 psi}.
+
+-20-
+3-Handling Instructions 
+Refrigerant charging 
+In order to prevent a liquid charge and greatly 
+increase risks of compressor dammage, do not 
+shake or turn the refrigerant bottle upside-down.
+Initial Leak Check
+Using the leak detector, check the system connec-
+tions for leaks.
+As the system pressure is not yet high, only large 
+leaks can be detected at this time. 
+
+-21-
+3-Handling Instructions 
+Installation position 
+The compressor should be installed  in the vehicle 
+within the range shown on the left-hand figure. If 
+it is installed outside this range, the compressor 
+will be adversely affected. 
+This compressor is equipped with a pressure feed 
+lubrication system, which cannot function if the 
+compressor is installed outside this range. 
+If the compressor is installed outside the range 
+shown on the left-hand figure any or all warranties 
+may be rendred void. 
+Installation precautions
+The new compressor is filled with the specified 
+quantity of compressor oil and nitrogen gas (N2). 
+When mounting the compressor on the vehicle, 
+please follow as below:
+1. Loosen the discharge side connector’ s cap and 
+gently release nitrogen gas (N
+2) from the com-
+pressor. 
+2. Turn the magnetic clutch’ s armature plate sev-
+eral times by hand to distribute the oil which has 
+settled in the cylinders.
+3. When installing the compressor in service sys -
+tem, the compressor should be installed after 
+adjusting the amount of oil, referring to “oil 
+check” p.16.
+Do not let the oil escape
+45˚ 45˚
+10˚
+10˚
+CAUTION!
+
+-22-
+3-Handling Instructions
+Piping precautions
+1. Position the O-Ring against the bulge in the 
+pipe when connecting hoses and pipes.
+2. Coat the piping connections and the O-rings 
+with PAG oil.
+3. Fit the nuts and unions tightly against the base 
+of the companion pieces, then hand tighten 
+the nut as much as possible. Then tighten to 
+the specified torque. 
+CAUTION!
+Always use the specified oil for HFC134a 
+systems to coat the O-rings.ADVICE
+Valeo Compressors recommends the 
+following hose sizes:
+INTERNAL DIAMETER
+Suction:  Ø 12.5 mm - 1/2 inch
+Discharge:  Ø 8 mm - 5/16 inch 
+O-ring positions
+Pipping connection procedure
+O-ring Pipe bulge
+Apply oil thoroughly to these areas
+Union Nut
+Piping connection
+Damage
+Gnawing at pipe end 
+Compressor / condenser connection
+CORRECT
+CORRECT
+INCORRECT
+INCORRECT
+INCORRECT
+
+-23-
+4-Troubleshooting
+Compressor troubleshooting
+When a problem occurs during the compressor operation, it is often difficult to pinpoint exact the cause 
+of the malfunction.
+As long as the compressor maintenance is done correctly, there should not be any problem throughout 
+the whole vehicle life, but should it happen, we hope this troubleshooting can help you solve the issue 
+efficiently .
+Below are listed most of the issues you may encounter while the A/C is ON. 
+Please refer to the compressor troubleshooting tree to localize the malfunction symptom, then look at the 
+table (p.24 - 25) for the appropriate counter measure.
+Most of the malfunction symptoms can be classified in the following categories:
+1. Insufficient cooling capacity
+2. Abnormal noise
+3. Smoke
+In case of insufficient cooling capacity, we recommend that you prepare a gauge manifold to measure the 
+pressure of both discharge and suction sides (for a detailed diagnosis by gauge pressure, see p.26 - 27).
+Compressor troubleshooting tree
+1. Insufficient cooling capacity
+2. Abnormal noise
+3. Smoke
+A. Compressor is not running
+B. Compressor is running
+C. Compressor runs intermittently
+A. Abnormal noise from compressor
+B. Abnormal noise from magnetic clutch
+C. Belt slipping noise
+A. Magnetic clutch friction surface slipping
+B. Magnetic clutch belt slipping
+C. Smoke from magnetic clutch
+D. Smoke from compressor
+
+Issue Symptom Possible cause Measure
+A
+B
+1. Insufficient cooling capacity
+Compressor is 
+not running
+(No cool blow 
+coming out)
+The magnetic clutch slips or 
+does not engage when the 
+compressor runs
+Magnetic clutch slips when 
+turning on the A/C switch
+Low pressure cut switch 
+operates (see p.26-27)
+The magnetic clutch engages 
+but the armature does not 
+rotate
+Belt run off the pulley
+Center bolt is loose / Center 
+bolt is missing
+Replace the compressor
+Fix the refrigerant leakage 
+then fill with refrigerant until 
+reaching the right amount
+Replace the lead wire if it is 
+defective
+Replace the compressor if it 
+is locked
+Replace magnetic clutch
+Repair or replace the 
+magnetic clutch
+Check the voltage of battery
+Adjust air gap or replace 
+magnetic clutch
+Replace the compressor or 
+the magnetic clutch
+Compressor internal part 
+damage
+Refrigerant shortage
+Lead wire short circuit or 
+wiring connector not seated 
+properly
+Magnetic clutch damage
+Magnetic clutch air gap too 
+wide
+Belt slipping
+Bolt drop off/ Armature drop 
+off
+Low magnetic clutch voltage
+Compressor internal part 
+damage or magnetic clutch 
+damage
+Compressor is 
+running
+(No cool blow 
+coming out)
+Replace the compressor
+Fix the refrigerant leakage 
+then fill with refrigerant until 
+reaching the right amount
+Check the voltage of battery 
+or replace the magnetic 
+clutch
+Replace the magnetic 
+clutch after making sure it is 
+defective 
+Belt tension readjustment
+Refrigerant shortage
+Magnetic clutch friction 
+surface slipping
+Loose connection of the 
+magnetic clutch electrical 
+circuit
+Magnetic clutch belt slipping
+The magnetic clutch slips or 
+does not engage when the 
+compressor is running
+Compressor is running 
+normally
+No difference of temperature 
+between discharge side and 
+suction side (see p.26 - 27)
+Poor compression
+Belt slipping
+The magnetic clutch does 
+not engage
+Defective thermostatic 
+switch
+Replace the thermostatic 
+switch after making sure it is 
+defective
+Service system and replace 
+the compressor
+Thermal fuse (if provided)  
+opened by high heat
+-24-
+4-Troubleshooting
+
+Issue Symptom Possible cause Measure
+C
+Compressor
+runs 
+intermittently 
+(Cool blow 
+comes out only 
+from time to 
+time)
+Reduce the refrigerant 
+charge until reaching the 
+right amount
+Both discharge and suction 
+pressures are high Excess of refrigerant
+Replace the condenser after 
+making sure it is defectiveCondenser fan failure
+Replace the magnetic 
+clutch after making sure it is 
+defective
+Loose connection of the 
+magnetic clutch electrical 
+circuit
+The magnetic clutch slips or 
+does not engage when the 
+compressor is running
+The magnetic clutch does 
+not engage
+Defective thermostatic 
+switch
+Replace the thermostatic 
+switch after making sure it is 
+defective
+4-
+-25-
+Troubleshooting
+
+2. Abnormal noise
+Issue Symptom Possible cause Measure
+A
+B
+C
+Abnormal 
+noise from the 
+compressor
+Abnormal noise from the 
+compressor body
+Abnormal vibration after 
+turning on the A/C switch
+Strange noise when the 
+magnetic clutch engages
+Armature slips / does 
+not engage when the 
+compressor is running
+Armature does not rotate 
+when magnetic clutch 
+engages
+Increase tightening torque of 
+the loose bolts
+Improve the compressor 
+attaching portion
+Replace the compressor
+Adjust air gap or replace 
+magnetic clutch
+Replace the compressor if 
+locked. Readjust the belt 
+tension if the belt is loose
+Replace the magnetic clutch
+Check the voltage of battery 
+or replace magnetic clutch
+Compressor installation bolt 
+is loose
+Wide gap at the attaching 
+portion between the 
+compressor and the bracket
+Compressor body internal 
+component damage
+Magnetic clutch damage
+Air gap too wide
+Belt slipping
+Magnetic clutch friction, 
+slippery surface
+The magnetic clutch has a 
+backlash and slips
+Abnormal 
+noise from the 
+magnetic clutch
+Belt slipping 
+noise
+3. Smoke
+Issue Symptom Possible cause Measure
+A
+B
+C
+D
+Magnetic 
+clutch friction 
+surface slipping
+The magnetic clutch slips / 
+does not engage when the 
+compressor is running
+The magnetic clutch does 
+not engage
+Adjust air gap or replace 
+magnetic clutch
+Clean friction surface or 
+replace magnetic clutch
+Magnetic clutch air gap too 
+wide
+Magnetic clutch friction, 
+greasy surface
+Coil open or shorted
+Smoke from 
+the magnetic 
+clutch
+Check the voltage of batteryLow magnetic clutch voltage
+The magnetic clutch slips / 
+does not engage when the 
+compressor is running
+Clean or replace the belt
+Adjust the compressor 
+installation position
+Adjust belt tension
+Belt alignment is not correct
+Magnetic clutch belt is 
+greasy
+Magnetic clutch belt tension 
+is loose
+Magnetic 
+clutch belt 
+slipping
+Refrigerant / oil is blowing 
+out
+Fix the refrigerant leakage 
+then fill with refrigerant until 
+having the right amount
+Refrigerant leaking, 
+uncoupled piping or piping 
+burst
+Smoke from 
+the compressor
+Replace the magnetic clutch
+Reduce the refrigerant 
+charge until reaching the 
+right amount
+Refrigerant blowing from 
+the high pressure relief valve 
+due to excess of refrigerant
+-26-
+4-Troubleshooting 
+
+-27-
+4-Troubleshooting
+A/C cycle diagnosis by gauge pressure
+Following is a diagnosis procedure to connect gauge manifold to A/C cycle, measure suction and 
+discharge pressures and analyze the defects of the cycle.
+Operation conditions of the A/C cycle for pressure measuring:
+1. Ambient temperature: 30 - 35 °C
+2. Engine speed: 1,500 rpm
+3. A/C switch: ON
+4. Blower speed: high
+5. Temperature control: full cold
+Gauge pressure 
+indication
+Cause Confirmation method Action to take
+Pressure is normal A/C cycle operates normally .
+If there is any defect (poor cooling performance), there shall be another 
+cause
+Both discharge and 
+suction pressures are 
+low
+Refrigerant shortage Connect gauge 
+manifold to cycle
+Recover refrigerant, 
+then refill with the 
+right amount of 
+refrigerant
+Receiver dryer is 
+clogged
+Temperature difference 
+between inlet and 
+outlet pipes happens.
+Dryer is covered with 
+frost
+Replace parts
+Expansion valve is 
+clogged
+Expansion valve was 
+covered with frost
+Clean or replace part
+Enclosure leakage from 
+the Expansion valve’ s 
+temperature sensing 
+tube.
+(Expansion valve 
+operates to close the 
+valve opening)
+Outlet side of the 
+Expansion valve is not 
+cooling.
+(Low side of gauge 
+indicates vacuum)
+Replace part
+Temperature sensing 
+device at outlet air is 
+defective
+Evaporator becomes 
+frozen up
+Adjust or replace the 
+part
+Refrigerant piping is 
+clogged or crashed
+If any part between 
+the dryer and the 
+compressor is clogged 
+or crashed, the low 
+side pressure becomes 
+vacuum
+Adjust or replace the 
+part
+Discharge pressure: around 0.9 - 1.6 MPaG (10 - 17 kgf/cm²)
+Suction pressure: around 0.03 - 0.10 MPaG (1.3 - 2.0 kgf/cm²)
+Suction pressure 
+becomes vacuum
+
+Gauge pressure 
+indication
+Cause Confirmation method Action to take
+Both discharge and 
+suction pressures are 
+high
+Excess of refrigerant Connect gauge 
+manifold to cycle
+Recover refrigerant, 
+then refill with the 
+right amount of 
+refrigerant
+Condenser cooling 
+malfunction
+Condenser becomes 
+muddy and fins are 
+clogged and collapsed. 
+Defect of cooling fan 
+rotation.
+Malfunction of fan 
+motor for condenser.
+Clean up, hand repair 
+of fin and replacement
+Misaligned Expansion 
+valve or thermal 
+sensing tube of the 
+Expansion valve is not 
+fit on regularly .
+(Excess opening of the 
+Expansion valve)
+Defective refrigerant 
+flow control, the 
+thermal sensing tube 
+is not closely in contact 
+with the evaporator 
+pipe
+Adjustment or 
+replacement
+Air mixed in 
+refrigeration cycle
+Just after compressor 
+stops, discharge 
+pressure will come 
+down immediately to 
+0.19 - 0.29 MPaG (3 - 4 
+kgf/cm²)
+Evacuate air from cycle, 
+the charge with the 
+adequate amount of 
+refrigerant
+Discharge pressure 
+is high and suction 
+pressure is low
+Refrigerant cycle is 
+clogged between 
+compressor and 
+condenser
+Appreciable 
+temperature difference 
+at the clogged location
+Clean up inside the 
+cycle or replace the 
+part
+Discharge pressure 
+is low and suction 
+pressure is high
+Defect of the 
+compressor valve or 
+gasket
+Discharge and suction 
+pressures balance 
+immediately after the 
+compressor stops.
+(Defective compression 
+of compressor)
+Replace the compressor
+-28-
+4-Troubleshooting
+
+-29-
+5-Tightening torques 
+Part Thread size Tightening torque
+1. Armature Bolt M6 x 1.0 12 - 14 N·m (8.9 - 10.3 lbf·ft)
+2. Field coil screw M5 x 0.8 4 - 6 N·m (3.0 - 4.4 lbf·ft)
+3. Body bolt M8 x 1.25 17 - 21 N·m ( 12.5 - 15.5 lbf·ft)
+4. Oil drain plug M8 x 1.25 13 - 15 N·m (9.6 - 11 lbf·ft)
+5. Pressure Relief valve 3/8-24UNF 8 - 10 N·m (5.9 - 7.4 lbf·ft) 
+6. Connector fixing bolt M10 x 1.5 20 - 24 N·m (14.8 - 17.7 lbf·ft) 
+7. Fittings and ports 3/4-16UNF
+7/8-14UNF 
+    1-14UNS
+Maximum torque: 27  ( 2.8 , 20 ) 
+Maximum torque: 37  ( 3.8 , 27 ) 
+Maximum torque: 47  ( 4.8 , 35 )
+
+-30-
+6-Service procedures - Magnetic clutch 
+Drive plate holder
+597031-2600
+Snap ring
+Pulley pullerCenter pulley puller 
+External snap ring 
+pliers
+Magnetic clutch
+Removal
+1. Remove the center bolt using  the drive plate 
+holder (597031-2600) to prevent armature 
+assembly rotation.
+2. Remove the drive plate using the drive plate 
+puller. Remove the shims from the compressor 
+drive plate or drive shaft. 
+3. Remove the snapring using external snapring 
+pliers.
+4. Position the center pulley puller at the end of 
+the driveshaft.
+5. Attach a suitable pulley puller to the pulley . 
+Hook the puller claws to the edge of the 
+pulley as shown.
+6. Tighten the center pulley puller bolt to remove 
+the pulley .
+CAUTION!
+Do not clip the puller claws into the pulley 
+groove to prevent pulley groove damage.
+
+-31-
+6-Service procedures - Magnetic clutch
+Pulley assembly Field coil
+Remover
+597035-3820
+Armature assembly
+5. Remove the field coil’ s lead wire bushing 
+using the remover (597035-3820).
+6. Remove the three field coil/compressor 
+screws. Then remove the  field coil.
+Inspection
+1. If the contact surface has been damaged by 
+excessive heat, the armature and pulley must 
+be replaced.
+2. Check the appearance of the pulley assembly . 
+If the contact surface of the pulley is 
+excessively grooved due to slippage, both the 
+pulley and armature must be replaced, The 
+contact surfaces of the pulley assembly must 
+be cleaned with a suitable solvent before 
+reinstallation.
+3. Check the field coil for a loose connector or 
+cracked insulation.
+CAUTION!
+Do not hold the field coil by the harness.
+
+-32-
+6- Service procedures - Magnetic clutch
+Press
+Pulley assembly Pulley Installer
+597034-3301
+External snap ring 
+pliers
+Snap ring
+Field coil
+Magnetic clutch
+Installation
+1. Install the field coil on the compressor (with 
+the harness on top) and tighten the mounting 
+screws to the specified torque.
+Specified torque: 4 ~ 6 N·m
+     {0.4 ~0.6 kgf·m, 3.0 ~ 4.4 lbf·ft}
+2. Carefully place the wire harness bushing.
+3. Install the pulley assembly using the pulley 
+installer (597034-3301) and a hand press.
+4. Install the snap ring (beveled edge up)  using 
+external snapring pliers.
+CAUTION!
+Use only a press to install the pulley 
+assembly. Do not use a hammer. A hammer 
+will damage or deform the pulley.
+
+-33-
+6- Service procedures - Magnetic clutch
+Drive plate
+Adjusting 
+shims
+Gap adjustment
+0.3~0.7 mm
+Thickness gauge
+5. Install the armature assembly on the driveshaft 
+together with the original shim(s). Press the 
+armature assembly down by hand.
+6. Install the center bolt and tighten the bolt 
+to the specified torque using the drive plate 
+holder (597031-2600) to prevent armature 
+assembly from the rotating.
+Specified torque: 12 ~ 14 N·m
+          {1.2 ~ 1.4 kgf·m, 8.9 ~ 10.3 lbf·ft}
+7. Check that the clutch clearance is as specified. 
+If necessary adjust the clearance using shim(s).
+Adjusting shims are available in the following 
+thickness:
+Shim Part No Thickness
+596541-1900 0.1 mm (0.0039 in)
+596541-2000 0.3 mm (0.0118 in)
+596541-2100 0.5 mm (0.0197 in)
+Specified clearance: 0.3 ~ 0.7 mm
+(0.01 ~ 0.03 in)
+8. Run-in the clutch as described on page 18.
+CAUTION!
+After tightening the center bolt, check that 
+the pulley rotates smoothly.
+
+-34-
+7- Services procedures - Shaft seal assembly
+Shaft seal assembly
+Removal
+1. Remove the magnetic clutch assembly as 
+described on page 30.
+2. Remove the drain plug and then drain the oil.
+3. Remove the five bolts securing the heads.
+4. Remove the snapring using internal snapring 
+pliers.
+5. Insert the remover (597035-5520) into the 
+shaft seal and turn it untill it hits the shaft seal 
+case. Then, pull the remover up to remove the 
+shaft seal.
+Internal snapring pliers Snapring
+Remover
+597035-5520
+
+-35-
+7- Services procedures - Shaft seal assembly
+Inspection
+The shaft seal must not be reused.
+Always use a new shaft seal when reassembling 
+the compressor. Ensure that the seal seat is free 
+from lint and dirt that could damage the shaft 
+seal lip.
+Installation
+Before installation refer to “Inspection” p.31
+1. Clean the sealed section of the front cylinder 
+head.
+2. Coat the new shaft seal and the front cylinder 
+head with clean compressor oil. If the slip 
+faces are dirty, clean them with thinners 
+and, after drying the clean faces, apply clean 
+compressor oil to them.
+3. Fit the guide (597067-1102) onto the end of 
+the drive shaft.
+4. Insert the shaft seal through the guide into 
+the front cylinder head. 
+5. Install the shaft seal as far as possible into the 
+front cylinder head using the installing end 
+of the remover (597032-2501). Remove the 
+guide (597067-1102) from the drive shaft. 
+Guide
+597067-1102
+Guide
+597067-1102
+Shaft seal 
+Remover
+597032-2501
+
+-36-
+7- Services procedures - Shaft seal assembly
+6. Install the snap ring using internal snap ring      
+pliers. Press the snap ring using the installing 
+end of the remover (597032-2501) until a 
+“click” is heard.
+Note 
+1. When installing the snap ring, the round 
+edge of the snap ring must face downward, 
+as shown on the left-hand figure. 
+2. Check the snap ring is properly installed, as 
+shown on the left-hand figure. 
+Install the oil drain plug with a new O-ring, 
+thinly coated with clean compressor oil, and 
+tighten it to the specified torque.
+ Specified torque: 13 ~ 15 N·m
+        {1.3 ~ 1.5 kgf·m, 9.6 ~ 11 lbf·ft}
+Snapring
+Snapring
+Guide
+Shaft seal
+Internal snapring pliers 
+
+-37-
+8- Services procedures - Cylinder heads
+Bolts
+Front cylinder head
+Valve plate 
+Remover
+597035-0500
+Tap lightly
+Cylinder heads (Front & Rear)
+Disassembly
+1. Remove the magnetic clutch assembly as 
+described on page 30.
+2. Remove the drain plug and then drain the oil.
+3. Remove the five bolts securing the heads.
+4. Alternately tap the two projections on the 
+front head using the remover (597035-0500) 
+and mallet to remove the front cylinder head.
+5. Remove the O-ring from the front cylinder 
+head, and then remove all the gasket material 
+from the cylinder head. 
+6. Remove the valve plate and suction valve 
+from the cylinder shaft assembly and then 
+remove all the gasket material from the valve 
+plate.
+1
+2
+O-ring 
+Gasket
+Suction valve
+
+-38-
+8- Services procedures - Cylinder heads
+7. To remove the rear cylinder head, alternately 
+tap the two projections on the front head 
+using the remover (5970350500) and mallet. 
+8. Remove the O-ring from the rear cylinder 
+head, and then remove all the gasket material 
+from the rear cylinder.  
+9. Remove the valve plate and suction valve 
+from cylinder shaft assembly, then remove all 
+the gasket material from the valve plate. 
+Inspection
+Check the front and rear valve plates for scratched, 
+bent or damaged parts.
+Inspect both cylinder heads and both valve plates 
+for nicks or burrs on the sealing surfaces.
+Clean both cylinder heads and both valve plates 
+or replace them if they are cracked or damaged.
+Check that none of the passengers in the valve 
+plates are blocked.
+Rear cylinder
+head
+O-ring 
+Gasket
+Valve plate 
+Suction valve
+Front cylinder head Valve plate 
+
+-39-
+8- Services procedures - Cylinder heads
+Escape groove
+Suction valve
+Piston
+Reassembly
+Rear cylinder head
+1. Place the cylinder shaft assembly on the 
+bench with the rear side up.
+2. Install the rear suction valve so that it matches 
+the roll pins.
+3. Install the rear valve plate on the rear suction 
+valve.
+4. Coat the new gasket with clean compressor oil 
+and install it on the rear valve plate.
+5. Coat the new O-ring with clean compressor oil 
+and install it on the rear cylinder head.
+6. Install the rear cylinder head.
+Ensure each valve matches each cylinder 
+valve escape groove.
+CAUTION!
+Do not mistake the front valve plate for 
+the rear one.
+CAUTION!
+Rear cylinder head
+O-ring 
+Gasket
+Valve plate 
+Suction valve
+
+-40-
+8- Services procedures - Cylinder heads
+Front cylinder head
+1. Place the cylinder shaft assembly on the 
+bench with the front side up.
+2. Install the front suction valve so that it matches 
+the pins.
+3. Install the front valve plate on the front suction 
+valve.
+4. Coat the new gasket with clean compressor oil 
+and install it on the front valve plate.
+5. Position the guide on the shaft.
+6. Coat the new O-ring with clean compressor oil 
+and install it on the front cylinder head.
+7. Install the front cylinder head.
+8. Mount the new gaskets on the through-bolts. 
+Insert the five through-bolts from the front 
+cylinder head side and tighten them to the 
+specified torque. Each bolt should be gradually 
+tightened in three or more stages to ensure 
+the specified torque. 
+The bolts should be tightened in the order 
+shown on the left-hand figure. 
+Specified torque: 20 ~ 24 N·m
+        {2.0 ~ 2.4 kgf·m, 14.8 ~ 17.7 lbf·ft}
+9. Install the oil drain plug with a new O-ring, 
+thinly coated with clean compressor oil, and 
+tighten it to the specified torque.
+ Specified torque: 13 ~ 15 N·m
+        {1.3 ~ 1.5 kgf·m, 9.6 ~ 11 lbf·ft}
+10. Fill the compressor with the specified 
+amount of clean compressor oil through the 
+suction-side connector. 
+11. Install the magnetic cluch  (p. 32)
+12. Run-in compressor (p. 18) 
+13. Carry out the leak test (p. 19)
+Ensure each valve matches each cylin-
+der’ s valve escape groove.
+CAUTION!
+Align the roll pins and tap the head light-
+ly and evenly with a plastic hammer.
+CAUTION!
+Front cylinder head
+O-ring 
+Gasket
+Valve plate 
+Suction valve
+
+-41-
+9-Service tools 
+Part name Part No Reference 
+page Application
+Remover 597035-5520 34 For removing cylinder 
+head and cylinder block
+Shaft Seal Remover
+597032-2501 35 For removing shaft seal
+Guide 597067-1102 35 For installing shaft seal
+Drive plate holder 597031-2600 30 To fix armature 
+Part name Part No Reference 
+page Application
+Gas leak detector
+597001-1020 19 For detecting gas leaks
+Compressor tools
+Test and inspection tools
+
+-42-
+10- Service parts
+1.Compressor body service kits, sets and parts
+*See Product description - Exploded view (p.7) except for Trust bearing 
+2.Oil
+Item Part name Reference Quantity
+- ZXL 100PG (250 cc) 569900-0600 250cc
+Item* Part name Reference Quantity
+OVERHAUL SET 
+(O-RING SET + GASKET SET + SHAFT SEAL+ 
+TRUST BEARING)
+566211-9520 -
+O-RING SET 566211-9720 -
+O-ring body (front & rear head) 569300-3100 n=2
+O-Ring (center) 569300-3200 n=1
+O-Ring (plug) 569300-2600 n=1
+O-Ring (PRV) 569300-9100 n=1
+O-ring  (Fitting) 569300-2800 n=2
+GASKET SET 566211-9820 -
+Gasket (front and rear head) 566128-8000 n=2
+Gasket (bolt) 596174-0900 n=5
+SHAFT SEAL SET 569942-1120 -
+Shaft seal assembly 569200-3820 n=1
+THRUST BEARING SET 596196-0520 -
+Thrust bearing 566196-0200 n=2
+OTHER COMPRESSOR PARTS -
+Valve plate assy (front) 566018-3820 n=1
+Valve plate assy (rear) 566018-3920 n=1
+Suction valve 566107-1700 n=2
+VALEO COMPRESSOR OIL AMOUNT GUIDELINES
+                               CALCULATION FORMULA* 
+TM08-21 Additional oil amount to system [g] =
+Refrigerant amount in the A/C : [g] x 0.15 + 40g - Specified oil amount in the compressor [g]
+TM31 Additional oil amount to system [g] =
+Refrigerant amount in the A/C : [g] x 0.08 + 400g - Specified oil amount in the compressor 500g
+TM43 Additional oil amount to system [g] =
+Refrigerant amount in the A/C : [g] x 0.08 + 400g - Specified oil amount in the compressor 800g 
+TM55/65
+(over 10kg refrigerant 
+A/C system)
+Additional oil amount to system [g] =
+Refrigerant amount in the A/C : [g] x 0.15 - Specified oil amount in the compressor 1,500g
+TM55/65
+(less 10kg refrigerant A/C 
+system)
+Additional oil amount to system [g] =
+Refrigerant amount in the A/C : [g] x 0.09 + 600g - Specified oil amount in the compressor 1,500g
+*If specific case, please contact your Valeo sales contact 
+
+-43-
+VALEO JAPAN - TM21
+for HFC-134a
+SERVICE MANUAL
+Version: WW21-17012.02EN
+Published by: VALEO JAPAN CO, LTD.
+Copyright © 2017, VALEO JAPAN CO, LTD.
+For any inquiry regarding the present service manual, contact 
+us at vc-oura-sales@valeo.com
+
+-44-
+Valeo TM21 Compressor
+Copyright © 2017 Valeo Japan CO., LTD. All Rights Reserved.
+Europe, Middle East & Africa
+ul.  Bestwinska
+43-500 Czechowice, Poland
+Phone: +48 (0) 3273 79 775
+Email: valeo.compressors.europe.
+sales.mailbox@valeo.com
+  
+Americas
+2520 Esters Blvd #100
+Dallas,  TX 75261 United States
+Phone: +1 972 456 1077
+Fax: +1 972 456 1090
+Email: vc-dallas-sales@valeo.com
+ 
+China
+No.2677 Shiji Avenue, Eco. & Tec. Dvt 
+Zone 130031 Changchun, Jilin PRC
+Phone: +86 (0) 431  8499 2025
+Fax: +86 (0) 431  8499 2004
+Email: vc-changchun-sales@valeo.com
+Asia
+39 Sendai, Kumagaya-shi 
+Saitama-ken 360-0193 Japan
+Phone: +81 (0) 48 539 3800
+Fax: +81 (0) 48 539 3843
+Email: vc-oura-sales@valeo.com
+Valeo TM21 Benefits
+High reliability
+Integration flexibility
+Great cooling capacity
+Enhanced performance
+Lower fuel consumption
+Compact & robust design
+Improved field serviceability
+Reduced noise and vibrations
+Staggering value through innovation
