@@ -460,8 +460,13 @@ def init_db() -> None:
                 vibration_rms REAL,
                 pressure_bar REAL,
                 current_a REAL,
+                source TEXT,
+                source_context_json TEXT NOT NULL DEFAULT '{}',
                 FOREIGN KEY(asset_id) REFERENCES assets(asset_id)
             );
+
+            CREATE INDEX IF NOT EXISTS idx_telemetry_asset_timestamp
+                ON telemetry(asset_id, timestamp);
 
             CREATE TABLE IF NOT EXISTS alerts (
                 alert_id TEXT PRIMARY KEY,
@@ -642,6 +647,8 @@ def init_db() -> None:
         _ensure_column(cursor, "knowledge_chunks", "vector_json", "TEXT NOT NULL DEFAULT '{}'")
         _ensure_column(cursor, "knowledge_chunks", "embedding_json", "TEXT NOT NULL DEFAULT '[]'")
         _ensure_column(cursor, "users", "password_hash", "TEXT")
+        _ensure_column(cursor, "telemetry", "source", "TEXT")
+        _ensure_column(cursor, "telemetry", "source_context_json", "TEXT NOT NULL DEFAULT '{}'")
         connection.commit()
     seed_demo_assets()
     seed_master_data()

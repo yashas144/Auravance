@@ -98,6 +98,9 @@ class Settings:
         "auravance-dev-secret-change-me",
     )
     auth_token_ttl_hours: int = int(os.getenv("AURAVANCE_AUTH_TOKEN_TTL_HOURS", "12"))
+    # When set, telemetry ingest requires a matching X-Ingest-Key header.
+    ingest_api_key: str = os.getenv("AURAVANCE_INGEST_API_KEY", "")
+    alert_cooldown_seconds: int = int(os.getenv("AURAVANCE_ALERT_COOLDOWN_SECONDS", "300"))
 
 
 settings = Settings()
