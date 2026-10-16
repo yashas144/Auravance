@@ -863,6 +863,42 @@ textarea {
   background: rgba(255, 240, 244, 0.92);
 }
 
+.replay-banner {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 1.2rem;
+  border-radius: 1rem;
+  color: #1d3a55;
+  background: rgba(232, 246, 252, 0.92);
+  border: 1px solid rgba(13, 184, 222, 0.28);
+  font-size: 0.92rem;
+}
+
+.replay-status {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.replay-status.status-normal {
+  color: #13653f;
+  background: rgba(46, 196, 128, 0.16);
+}
+
+.replay-status.status-broken,
+.replay-status.status-recovering,
+.replay-status.status-air_leak,
+.replay-status.status-failed {
+  color: #8a1e36;
+  background: rgba(255, 79, 109, 0.16);
+}
+
+.replay-note {
+  color: #5a6f86;
+  font-size: 0.84rem;
+}
+
 .loading-indicator {
   position: sticky;
   bottom: 1rem;

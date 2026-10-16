@@ -32,6 +32,25 @@ const EQUIPMENT_CATEGORIES = [
   "Cooling System",
 ];
 
+const TELEMETRY_CHANNELS = [
+  { field: "temperature_c", label: "Temperature", unit: "°C", digits: 2, description: "thermal load", color: "#ff7a1a" },
+  { field: "vibration_rms", label: "Vibration", unit: "", digits: 3, description: "RMS vibration", color: "#ff4f6d" },
+  { field: "pressure_bar", label: "Pressure", unit: "bar", digits: 2, description: "line stability", color: "#0db8de" },
+  { field: "current_a", label: "Current", unit: "A", digits: 2, description: "electrical draw", color: "#ffd166" },
+];
+// Asset lists show pumps first, then compressors, then everything else; by name within a type.
+const ASSET_TYPE_ORDER = ["pump", "compressor"];
+
+function sortAssets(assets) {
+  const rank = (asset) => {
+    const index = ASSET_TYPE_ORDER.indexOf(asset.asset_type);
+    return index === -1 ? ASSET_TYPE_ORDER.length : index;
+  };
+  return [...assets].sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name, undefined, { numeric: true }));
+}
+
+// "pump-replay" is the source name used before replay supported several datasets.
+const REPLAY_SOURCES = new Set(["dataset-replay", "pump-replay"]);
 const VENDOR_TYPES = ["OEM", "Service Partner", "Parts Supplier", "Calibration Vendor"];
 const USER_ROLES = ["Admin", "Plant Manager", "Maintenance Planner", "Reliability Engineer", "Technician", "Viewer"];
 
@@ -1227,7 +1246,7 @@ function StatCard({ label, value, subvalue, tone = "default" }) {
   );
 }
 
-function MiniLineChart({ label, unit, values, color }) {
+function MiniLineChart({ label, unit, values, color, emptyLabel = "Waiting for more telemetry" }) {
   const filtered = values.filter((value) => typeof value === "number");
   if (filtered.length < 2) {
     return (
@@ -1236,7 +1255,7 @@ function MiniLineChart({ label, unit, values, color }) {
           <h3>{label}</h3>
           <span>{unit}</span>
         </div>
-        <div className="chart-empty">Waiting for more telemetry</div>
+        <div className="chart-empty">{emptyLabel}</div>
       </section>
     );
   }
@@ -1424,6 +1443,45 @@ function MonitoringScreen({
   );
 
   const latestTelemetry = history[history.length - 1] ?? null;
+  const replay = REPLAY_SOURCES.has(latestTelemetry?.source) ? latestTelemetry.source_context : null;
+  const realUnits = replay?.units === "real";
+
+  // How each telemetry channel is shown: real units, raw anonymized values, or not measured.
+  function channelView(channel) {
+    const sourceColumn = replay?.[`${channel.field}_source`];
+    if (replay && !sourceColumn) {
+      return {
+        label: channel.label,
+        chartLabel: channel.label,
+        unit: "",
+        value: "--",
+        subvalue: "not measured by this dataset",
+        values: [],
+        emptyLabel: "Not measured by this dataset",
+      };
+    }
+    if (replay && !realUnits) {
+      return {
+        label: `${channel.label} channel`,
+        chartLabel: `${channel.label} (${sourceColumn})`,
+        unit: "",
+        value: latestTelemetry ? formatNumber(replay[sourceColumn]) : "--",
+        subvalue: `raw ${sourceColumn}`,
+        values: history.map((point) => point.source_context?.[sourceColumn]),
+      };
+    }
+    const unit = replay?.[`${channel.field}_unit`] ?? channel.unit;
+    return {
+      label: channel.label,
+      chartLabel: `${channel.label} Trend`,
+      unit,
+      value: latestTelemetry
+        ? `${formatNumber(latestTelemetry[channel.field], channel.digits)} ${unit}`.trim()
+        : "--",
+      subvalue: sourceColumn ? `${sourceColumn}` : channel.description,
+      values: history.map((point) => point[channel.field]),
+    };
+  }
 
   return (
     <>
@@ -1432,14 +1490,14 @@ function MonitoringScreen({
           <h1 className="eyebrow">Auravance Control Center</h1>
           <p>Industrial foresight</p>
           <p className="hero-copy">
-            Live simulated telemetry, failure risk scoring, and technician-ready diagnostics from the
+            Live telemetry, failure risk scoring, and technician-ready diagnostics from the
             FastAPI backend.
           </p>
         </div>
         <div className="hero-status">
           <div className="status-chip">
             <span className={`pulse ${prediction ? statusTone(prediction.anomaly_label) : "default"}`} />
-            {prediction ? prediction.anomaly_label : "loading"}
+            {prediction ? prediction.anomaly_label : lastUpdated && !latestTelemetry ? "no data" : "loading"}
           </div>
           <span>Last refresh {lastUpdated || "pending"}</span>
         </div>
@@ -1487,6 +1545,22 @@ function MonitoringScreen({
             </div>
           </section>
 
+          <section className="chart-grid">
+            {TELEMETRY_CHANNELS.map((channel) => {
+              const view = channelView(channel);
+              return (
+                <MiniLineChart
+                  key={channel.field}
+                  label={view.chartLabel}
+                  unit={view.unit}
+                  values={view.values}
+                  color={channel.color}
+                  emptyLabel={view.emptyLabel}
+                />
+              );
+            })}
+          </section>
+
           <section className="stats-grid">
             <StatCard
               label="Failure probability"
@@ -1516,54 +1590,43 @@ function MonitoringScreen({
             />
           </section>
 
-          <section className="stats-grid telemetry-grid">
-            <StatCard
-              label="Temperature"
-              value={latestTelemetry ? `${formatNumber(latestTelemetry.temperature_c)} \u00b0C` : "--"}
-              subvalue="thermal load"
-            />
-            <StatCard
-              label="Vibration"
-              value={latestTelemetry ? formatNumber(latestTelemetry.vibration_rms, 3) : "--"}
-              subvalue="RMS vibration"
-            />
-            <StatCard
-              label="Pressure"
-              value={latestTelemetry ? `${formatNumber(latestTelemetry.pressure_bar)} bar` : "--"}
-              subvalue="line stability"
-            />
-            <StatCard
-              label="Current"
-              value={latestTelemetry ? `${formatNumber(latestTelemetry.current_a)} A` : "--"}
-              subvalue="electrical draw"
-            />
-          </section>
+          {!latestTelemetry && lastUpdated && !error ? (
+            <section className="replay-banner">
+              <strong>No telemetry from this asset yet</strong>
+              <span>
+                Nothing is streaming to {selectedAsset?.name ?? "this asset"} yet. Start{" "}
+                <code>backend/scripts/replay_telemetry.py</code> to stream live data to every registered asset; new
+                assets are picked up within a minute.
+              </span>
+            </section>
+          ) : null}
 
-          <section className="chart-grid">
-            <MiniLineChart
-              label="Temperature Trend"
-              unit="\u00b0C"
-              values={history.map((point) => point.temperature_c)}
-              color="#ff7a1a"
-            />
-            <MiniLineChart
-              label="Vibration Trend"
-              unit="RMS"
-              values={history.map((point) => point.vibration_rms)}
-              color="#ff4f6d"
-            />
-            <MiniLineChart
-              label="Pressure Trend"
-              unit="bar"
-              values={history.map((point) => point.pressure_bar)}
-              color="#0db8de"
-            />
-            <MiniLineChart
-              label="Current Trend"
-              unit="A"
-              values={history.map((point) => point.current_a)}
-              color="#ffd166"
-            />
+          {replay ? (
+            <section className="replay-banner">
+              <strong>Replaying real recorded data</strong>
+              <span>
+                {replay.dataset_label ?? "Kaggle pump sensor dataset"} {"\u00b7"} episode {replay.episode_id}{" "}
+                {"\u00b7"} recorded {replay.source_timestamp}
+              </span>
+              <span>
+                Ground truth at this moment:{" "}
+                <span className={`replay-status status-${String(replay.machine_status).toLowerCase()}`}>
+                  {replay.machine_status}
+                </span>
+              </span>
+              <span className="replay-note">
+                {realUnits
+                  ? "Values are in the real units recorded on the machine; channels the dataset doesn't measure are marked."
+                  : "Channels are anonymized in the source dataset, so raw values are shown without units."}
+              </span>
+            </section>
+          ) : null}
+
+          <section className="stats-grid telemetry-grid">
+            {TELEMETRY_CHANNELS.map((channel) => {
+              const view = channelView(channel);
+              return <StatCard key={channel.field} label={view.label} value={view.value} subvalue={view.subvalue} />;
+            })}
           </section>
 
           <section className="bottom-grid">
@@ -2459,7 +2522,7 @@ function App() {
   }
 
   async function loadAssetsList(preferredAssetId = "") {
-    const assetRows = await readJson("/assets");
+    const assetRows = sortAssets(await readJson("/assets"));
     setAssets(assetRows);
     if (assetRows.length > 0) {
       const nextAssetId = assetRows.some((item) => item.asset_id === preferredAssetId)
@@ -2573,7 +2636,7 @@ function App() {
 
     async function loadAssets() {
       try {
-        const assetRows = await readJson("/assets");
+        const assetRows = sortAssets(await readJson("/assets"));
         if (ignore) return;
         setAssets(assetRows);
         if (assetRows.length > 0) {
@@ -2634,15 +2697,21 @@ function App() {
   useEffect(() => {
     if (!selectedAssetId || !currentUser) return;
     let cancelled = false;
+    // Never show the previous asset's readings under the newly selected one.
+    setHistory([]);
+    setPrediction(null);
 
     async function loadDashboard() {
       setLoading(true);
       try {
-        const [historyRows, predictionRow, alertRows] = await Promise.all([
+        const [historyRows, alertRows] = await Promise.all([
           readJson(`/telemetry/assets/${selectedAssetId}/history?limit=24`),
-          readJson(`/predictions/assets/${selectedAssetId}/latest`),
           readJson("/alerts"),
         ]);
+        // Assets that have never reported telemetry have nothing to score yet.
+        const predictionRow = historyRows.length
+          ? await readJson(`/predictions/assets/${selectedAssetId}/latest`)
+          : null;
 
         if (cancelled) return;
         setHistory(historyRows);
@@ -2708,6 +2777,11 @@ function App() {
 
   async function runRootCauseAnalysis() {
     if (!selectedAssetId) return;
+    if (!history.length) {
+      setDiagnostics(null);
+      setDiagnosticsError("This asset has not reported any telemetry yet, so there is nothing to diagnose.");
+      return;
+    }
 
     const assetAlerts = alerts.filter((alert) => alert.asset_id === selectedAssetId);
     const summary = symptomSummary.trim() || buildRootCauseSymptomSummary(prediction, assetAlerts);
