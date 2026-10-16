@@ -11,3 +11,16 @@ venv/
 .DS_Store
 
 *.zip
+
+terraform/terraform.tfvars
+terraform/.terraform/
+terraform/*.tfstate*
+
+# Large source datasets (processed pump CSV is ~116 MB, over GitHub's 100 MB limit)
+backend/data/raw/
+backend/data/interim/
+backend/data/processed/pump_sensor/
+
+# Local tooling and scratch databases
+.claude/
+backend/data/replay_run.db
