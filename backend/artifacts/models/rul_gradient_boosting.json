@@ -1,10 +1,14 @@
 {
   "artifact_schema_version": 1,
   "task": "rul_regression",
-  "model_version": "rul-hgb-cmapss-v1.0.0",
+  "model_version": "rul-hgb-pump-v2.1.0",
   "algorithm": "HistGradientBoostingRegressor",
-  "trained_at": "2026-08-07T14:42:39.942749+00:00",
-  "source_dataset": "c_mapss/train_fd001-fd004.csv",
+  "trained_at": "2026-10-14T17:29:43.339219+00:00",
+  "source_dataset": "pump_sensor/sensor_processed.csv",
+  "target": "hours until the next BROKEN event, capped at 240h; 0 while down",
+  "target_unit": "hours",
+  "rul_cap_hours": 240.0,
+  "evaluation": "leave-one-failure-out: each failure cycle scored by a model trained without it",
   "feature_names": [
     "temperature",
     "vibration",
@@ -12,23 +16,23 @@
     "current"
   ],
   "source_columns": [
-    "sensor_2",
-    "sensor_4",
-    "sensor_11",
-    "sensor_15"
+    "sensor_04",
+    "sensor_00",
+    "sensor_01",
+    "sensor_02"
   ],
   "source_transform": {
     "medians": {
-      "sensor_2": 605.81,
-      "sensor_4": 1269.35,
-      "sensor_11": 44.91,
-      "sensor_15": 9.0549
+      "sensor_04": 633.3334,
+      "sensor_00": 2.456539,
+      "sensor_01": 48.26389,
+      "sensor_02": 51.736110687255895
     },
     "iqr_scales": {
-      "sensor_2": 92.38999999999999,
-      "sensor_4": 275.4100000000001,
-      "sensor_11": 5.330000000000005,
-      "sensor_15": 0.9045000000000005
+      "sensor_04": 9.83800000000008,
+      "sensor_00": 0.05509200000000014,
+      "sensor_01": 2.8645799999999966,
+      "sensor_02": 2.256945687255893
     }
   },
   "runtime_profile": {
@@ -49,16 +53,63 @@
       "scale": 2.5
     }
   },
-  "rul_cap_cycles": 125,
-  "hours_per_cycle": 2.0,
-  "deployment_safety_envelope": "min(model_hours, 250 / (1 + 0.8 * max_abs_runtime_z))",
   "metrics": {
-    "mae_cycles": 15.5789,
-    "rmse_cycles": 21.0872,
-    "r2": 0.7369,
-    "evaluation_rows": 32800.0,
-    "evaluation_engines": 142.0
+    "loo_mae_hours": 64.46,
+    "constant_baseline_mae_hours": 80.57,
+    "loo_mean_prediction_hours_down": 22.0,
+    "actual_mean_hours_down": 0.0,
+    "loo_mean_prediction_hours_under_24h": 171.5,
+    "actual_mean_hours_under_24h": 12.0,
+    "loo_mean_prediction_hours_24_to_72h": 176.7,
+    "actual_mean_hours_24_to_72h": 48.0,
+    "loo_mean_prediction_hours_3_to_7d": 178.2,
+    "actual_mean_hours_3_to_7d": 114.7,
+    "loo_mean_prediction_hours_over_7d": 186.4,
+    "actual_mean_hours_over_7d": 235.3
   },
-  "training_rows": 127559,
-  "training_engines": 567
+  "training_rows": 205920,
+  "failures": [
+    "2018-04-12 21:55:00",
+    "2018-04-18 00:30:00",
+    "2018-05-19 03:18:00",
+    "2018-05-25 00:30:00",
+    "2018-06-28 22:00:00",
+    "2018-07-08 00:11:00",
+    "2018-07-25 14:00:00"
+  ],
+  "fold_dataset": "kaggle-pump-sensor",
+  "fold_held_out_ranges": [
+    [
+      "2018-04-01 00:00:00",
+      "2018-04-13 13:39:00"
+    ],
+    [
+      "2018-04-13 13:40:00",
+      "2018-04-20 04:20:00"
+    ],
+    [
+      "2018-04-20 04:21:00",
+      "2018-05-20 01:10:00"
+    ],
+    [
+      "2018-05-20 01:11:00",
+      "2018-05-25 10:35:00"
+    ],
+    [
+      "2018-05-25 10:36:00",
+      "2018-07-04 17:50:00"
+    ],
+    [
+      "2018-07-04 17:51:00",
+      "2018-07-08 00:52:00"
+    ],
+    [
+      "2018-07-08 00:53:00",
+      "2018-07-25 15:15:00"
+    ],
+    [
+      "2018-07-25 15:16:00",
+      "2018-08-31 23:59:00"
+    ]
+  ]
 }
