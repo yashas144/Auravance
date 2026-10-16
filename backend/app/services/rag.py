@@ -35,6 +35,28 @@ ISSUE_PLAYBOOK = {
             "Compare the pressure pattern against the last stable operating run before shutdown planning.",
         ],
     },
+    "vibration": {
+        "query_terms": ["bearing wear", "vibration", "imbalance", "misalignment", "lubrication", "looseness"],
+        "likely_causes": [
+            "Rising vibration points to rolling-element bearing wear or a developing race defect.",
+            "Imbalance, misalignment, or mechanical looseness may be amplifying the vibration level.",
+        ],
+        "recommended_actions": [
+            "Inspect bearings, lubrication condition, and shaft alignment; check mounting bolts for looseness.",
+            "Trend vibration closely and plan a bearing replacement if the level keeps rising.",
+        ],
+    },
+    "pressure": {
+        "query_terms": ["air leak", "pressure drop", "compressor duty cycle", "seal leak", "pneumatic panel pressure"],
+        "likely_causes": [
+            "Falling system pressure with sustained loading suggests an air leak downstream of the compressor.",
+            "Worn seals, open drains, or a faulty valve may be letting pressure bleed off.",
+        ],
+        "recommended_actions": [
+            "Survey fittings, hoses, drains, and valves for leaks while the system is pressurised.",
+            "Compare compressor loaded time against normal duty cycle to confirm the leak rate.",
+        ],
+    },
     "current": {
         "query_terms": ["motor overload", "current draw", "mechanical drag", "power quality", "cooling fan"],
         "likely_causes": [

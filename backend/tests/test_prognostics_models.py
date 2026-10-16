@@ -2,40 +2,82 @@ from __future__ import annotations
 
 import unittest
 from datetime import datetime, timezone
+from statistics import mean
 
+from app.ingestion.replay import (
+    DATASETS,
+    build_payload,
+    downsample,
+    group_episodes,
+    read_replay_rows,
+)
 from app.models.schemas import TelemetryRecord
 from app.services.prognostics import failure_model_service, rul_model_service
 
 
 class PrognosticsModelTests(unittest.TestCase):
-    def _record(self, temperature: float, vibration: float, pressure: float, current: float) -> TelemetryRecord:
-        return TelemetryRecord(
-            asset_id="pump-04",
-            timestamp=datetime.now(timezone.utc),
-            temperature_c=temperature,
-            vibration_rms=vibration,
-            pressure_bar=pressure,
-            current_a=current,
-        )
+    """Behaviour on the recorded pump episodes that the replay streams live."""
 
-    def test_failure_model_loads_and_ranks_degradation(self) -> None:
-        self.assertTrue(failure_model_service.status().loaded)
-        normal = failure_model_service.predict([self._record(68.0, 0.30, 5.0, 9.0)])
-        degraded = failure_model_service.predict([self._record(96.0, 1.40, 2.8, 17.0)])
-        self.assertIsNotNone(normal)
-        self.assertIsNotNone(degraded)
-        self.assertGreater(degraded.probability, normal.probability)
+    @classmethod
+    def setUpClass(cls) -> None:
+        mappings = DATASETS["pump"].load_mappings()
+        cls.episodes: list[dict[str, list[TelemetryRecord]]] = []
+        for episode in group_episodes(read_replay_rows(DATASETS["pump"].replay_path)):
+            phases: dict[str, list[TelemetryRecord]] = {"healthy": [], "down": []}
+            cls.episodes.append(phases)
+            seen_failure = False
+            for row in downsample(episode, stride=15):
+                seen_failure = seen_failure or row.machine_status == "BROKEN"
+                if row.machine_status == "NORMAL" and not seen_failure:
+                    phase = "healthy"
+                elif row.machine_status in {"BROKEN", "RECOVERING"}:
+                    phase = "down"
+                else:
+                    continue
+                payload = build_payload(row, "pump-04", "", mappings, DATASETS["pump"])
+                phases[phase].append(
+                    TelemetryRecord(
+                        asset_id="pump-04",
+                        timestamp=datetime.now(timezone.utc),
+                        source_context=payload["source_context"],
+                        **payload["metrics"],
+                    )
+                )
 
-    def test_rul_model_loads_and_reduces_life_for_degradation(self) -> None:
-        self.assertTrue(rul_model_service.status().loaded)
-        normal = rul_model_service.predict([self._record(68.0, 0.30, 5.0, 9.0)])
-        warning = rul_model_service.predict([self._record(84.0, 0.72, 4.0, 12.5)])
-        degraded = rul_model_service.predict([self._record(96.0, 1.40, 2.8, 17.0)])
-        self.assertIsNotNone(normal)
-        self.assertIsNotNone(warning)
-        self.assertIsNotNone(degraded)
-        self.assertLess(warning.hours, normal.hours)
-        self.assertLess(degraded.hours, warning.hours)
+    def test_models_are_pump_trained(self) -> None:
+        for service in (failure_model_service, rul_model_service):
+            status = service.status()
+            self.assertTrue(status.loaded, status.detail)
+            self.assertEqual(status.source_dataset, "pump_sensor/sensor_processed.csv")
+
+    def test_replayed_readings_are_scored_by_held_out_models(self) -> None:
+        record = self.episodes[0]["down"][0]
+        self.assertIn("+heldout-", failure_model_service.predict([record]).model_version)
+
+        live = record.model_copy(update={"source_context": {}})
+        self.assertNotIn("+heldout-", failure_model_service.predict([live]).model_version)
+
+    def _phase_means(self, predict) -> list[tuple[float, float]]:
+        return [
+            (mean(predict(record) for record in phases["healthy"]), mean(predict(record) for record in phases["down"]))
+            for phases in self.episodes
+        ]
+
+    def test_failure_probability_tracks_pump_state(self) -> None:
+        # Held-out scores, per recorded failure: higher while the pump is broken or
+        # recovering than while it runs normally beforehand.
+        per_episode = self._phase_means(lambda record: failure_model_service.predict([record]).probability)
+        for healthy, down in per_episode:
+            self.assertGreater(down, healthy + 0.25)
+        self.assertGreater(mean(down for _, down in per_episode), 0.6)
+        self.assertLess(mean(healthy for healthy, _ in per_episode), 0.25)
+
+    def test_remaining_life_collapses_when_pump_is_down(self) -> None:
+        per_episode = self._phase_means(lambda record: rul_model_service.predict([record]).hours)
+        for healthy, down in per_episode:
+            self.assertLess(down, healthy - 40.0)
+        self.assertGreater(mean(healthy for healthy, _ in per_episode), 120.0)
+        self.assertLess(mean(down for _, down in per_episode), 80.0)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,75 @@
+{
+  "artifact_schema_version": 1,
+  "profile": "compressor",
+  "trained_at": "2026-10-14T23:25:19.654951+00:00",
+  "source_dataset": "metropt3/metropt3_5min.csv",
+  "feature_names": [
+    "temperature",
+    "pressure",
+    "current"
+  ],
+  "telemetry_fields": [
+    "temperature_c",
+    "pressure_bar",
+    "current_a"
+  ],
+  "runtime_profile": {
+    "temperature": {
+      "center": 62.7333,
+      "scale": 8.9768
+    },
+    "pressure": {
+      "center": 8.9989,
+      "scale": 0.85845
+    },
+    "current": {
+      "center": 1.7496,
+      "scale": 3.7232
+    }
+  },
+  "failures": [
+    "2020-04-18 00:00:00",
+    "2020-05-29 23:30:00",
+    "2020-06-05 10:00:00",
+    "2020-07-15 14:30:00"
+  ],
+  "fold_dataset": "metropt-3",
+  "task": "rul_regression",
+  "model_version": "rul-hgb-compressor-v1.0.0",
+  "algorithm": "HistGradientBoostingClassifier",
+  "strategy": "sudden",
+  "target": "hours until the next failure, capped at 240h; 0 during a failure",
+  "target_unit": "hours",
+  "rul_cap_hours": 240.0,
+  "evaluation": "leave-one-failure-out",
+  "metrics": {
+    "loo_mae_hours": 44.12,
+    "constant_baseline_mae_hours": 44.19,
+    "loo_mean_prediction_hours_down": 156.1,
+    "loo_mean_prediction_hours_under_24h": 218.1,
+    "loo_mean_prediction_hours_24_to_72h": 217.7,
+    "loo_mean_prediction_hours_over_72h": 212.9
+  },
+  "fold_held_out_ranges": [
+    [
+      "2020-02-01 00:00:00",
+      "2020-04-18 23:55:00"
+    ],
+    [
+      "2020-04-19 00:00:00",
+      "2020-05-30 06:00:00"
+    ],
+    [
+      "2020-05-30 06:05:00",
+      "2020-06-07 14:15:00"
+    ],
+    [
+      "2020-06-08 11:45:00",
+      "2020-07-15 19:00:00"
+    ],
+    [
+      "2020-07-15 19:05:00",
+      "2020-09-01 03:55:00"
+    ]
+  ]
+}

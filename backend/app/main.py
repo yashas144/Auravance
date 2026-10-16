@@ -1,3 +1,5 @@
+import asyncio
+import sys
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -8,8 +10,30 @@ from app.core.config import settings
 from app.core.db import init_db
 
 
+def _ignore_windows_connection_reset(loop: asyncio.AbstractEventLoop) -> None:
+    """Silence the Proactor loop's traceback when a client resets a finished connection.
+
+    The request has already been answered by then; asyncio just logs the TCP reset.
+    """
+    previous = loop.get_exception_handler()
+
+    def handler(event_loop: asyncio.AbstractEventLoop, context: dict) -> None:
+        if isinstance(context.get("exception"), ConnectionResetError) and "_call_connection_lost" in repr(
+            context.get("handle")
+        ):
+            return
+        if previous is not None:
+            previous(event_loop, context)
+        else:
+            event_loop.default_exception_handler(context)
+
+    loop.set_exception_handler(handler)
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
+    if sys.platform == "win32":
+        _ignore_windows_connection_reset(asyncio.get_running_loop())
     init_db()
     yield
 

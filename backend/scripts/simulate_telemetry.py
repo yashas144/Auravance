@@ -1,13 +1,15 @@
 from __future__ import annotations
 
+import json
+import os
 import random
 import time
 from datetime import datetime, timezone
 from urllib import request
-import json
 
 
 API_URL = "http://127.0.0.1:8000/api/v1/telemetry/ingest"
+INGEST_KEY = os.getenv("AURAVANCE_INGEST_API_KEY", "")
 ASSETS = ["compressor-17", "motor-08", "pump-04"]
 
 
@@ -59,13 +61,17 @@ def build_metrics(asset_id: str, step: int) -> dict[str, float | None]:
 
 def send_payload(payload: dict[str, object]) -> None:
     body = json.dumps(payload).encode("utf-8")
+    headers = {"Content-Type": "application/json"}
+    if INGEST_KEY:
+        headers["X-Ingest-Key"] = INGEST_KEY
     http_request = request.Request(
         API_URL,
         data=body,
-        headers={"Content-Type": "application/json"},
+        headers=headers,
         method="POST",
     )
     with request.urlopen(http_request, timeout=5) as response:
+        response.read()
         print(f"{payload['asset_id']}: {response.status}")
 
 
@@ -78,6 +84,7 @@ def main() -> None:
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "asset_id": asset_id,
                 "metrics": build_metrics(asset_id, step),
+                "source": "simulator",
             }
             send_payload(payload)
         step += 1

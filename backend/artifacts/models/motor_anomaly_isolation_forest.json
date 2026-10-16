@@ -1,0 +1,39 @@
+{
+  "artifact_schema_version": 1,
+  "profile": "motor",
+  "trained_at": "2026-10-14T23:39:16.687315+00:00",
+  "source_dataset": "ims_bearings/ims_features.csv",
+  "feature_names": [
+    "vibration"
+  ],
+  "telemetry_fields": [
+    "vibration_rms"
+  ],
+  "runtime_profile": {
+    "vibration": {
+      "center": 0.08026,
+      "scale": 0.02185
+    }
+  },
+  "failures": [
+    "2003-11-25 23:39:56",
+    "2004-02-19 06:22:39",
+    "2004-04-18 02:42:55"
+  ],
+  "fold_dataset": "ims-bearings",
+  "model_version": "isolation-forest-motor-v1.0.0",
+  "algorithm": "IsolationForest",
+  "thresholds": {
+    "warning": 0.25466335063948026,
+    "high": 0.30421703263660177
+  },
+  "score_calibration": {
+    "healthy_center": -0.06312660361405054,
+    "observed_max": 0.31673987483869925
+  },
+  "metrics": {
+    "down_vs_healthy_roc_auc": 0.9842,
+    "healthy_flag_rate": 0.0101,
+    "down_flag_rate": 0.3333
+  }
+}

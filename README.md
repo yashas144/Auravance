@@ -34,10 +34,11 @@ See [`docs/backend-architecture.md`](docs/backend-architecture.md) for a detaile
 
 ## Core capabilities
 
-- **Failure prediction** — Gradient Boosting model trained on run-to-failure sensor data to estimate probability of equipment failure
-- **Remaining Useful Life (RUL) estimation** — regression model trained on NASA C-MAPSS turbofan degradation data
+- **Failure prediction** — Gradient Boosting classifiers trained per equipment type on real failures (7 pump breakdowns, 4 compressor air leaks, 3 motor-bearing failures) to estimate the probability that a machine is failing or will fail within 72 hours, evaluated leave-one-failure-out
+- **Remaining Useful Life (RUL) estimation** — per-equipment-type models estimating hours until the next failure
 - **Anomaly detection** — Isolation Forest for unsupervised detection of abnormal sensor behavior
 - **RAG-based root cause analysis** — GPT-4o retrieves from a curated knowledge base (compressor, bearing, motor, and temperature guides) to generate grounded, human-readable explanations for detected issues, instead of relying on the LLM's unverified priors
+- **Real-data replay** — streams every asset live from a real recording of its machine type (Kaggle pump sensors, MetroPT-3 metro air compressor, NASA/IMS motor-driven bearings) through the ingest API, with ground truth shown next to the model output (`backend/scripts/replay_telemetry.py`)
 - **Telemetry simulation** — synthetic real-time sensor stream generator for live dashboard demos
 - **REST API** — endpoints for assets, telemetry ingestion, predictions, diagnostics, alerts, and knowledge queries
 - **Monitoring dashboard** — React frontend for visualizing asset health, alerts, and diagnostic output
@@ -50,7 +51,7 @@ See [`docs/backend-architecture.md`](docs/backend-architecture.md) for a detaile
 | ML / DL | XGBoost, scikit-learn (Isolation Forest, Gradient Boosting), LSTM |
 | LLM / RAG | GPT-4o, custom retrieval pipeline over chunked domain knowledge |
 | Frontend | React, Vite |
-| Data | NASA C-MAPSS (turbofan degradation), IMS Bearings, AI4I 2020, industrial pump sensor data |
+| Data | Industrial pump sensor data (Kaggle), MetroPT-3 metro air compressor (UCI, CC BY 4.0), NASA/IMS bearing run-to-failure; also NASA C-MAPSS and AI4I 2020 (prepared, not used by the live models) |
 
 ## Datasets
 

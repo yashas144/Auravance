@@ -233,11 +233,24 @@ class TelemetryIngestRequest(BaseModel):
     timestamp: datetime
     asset_id: str
     metrics: TelemetryMetrics
+    source: str = "api"
+    source_context: dict[str, str | float | None] = Field(default_factory=dict)
 
 
 class TelemetryIngestResponse(BaseModel):
     status: str
     asset_id: str
+    received_at: datetime
+
+
+class TelemetryBatchIngestRequest(BaseModel):
+    readings: list[TelemetryIngestRequest] = Field(min_length=1, max_length=500)
+
+
+class TelemetryBatchIngestResponse(BaseModel):
+    status: str
+    accepted: int
+    asset_ids: list[str]
     received_at: datetime
 
 
@@ -248,6 +261,8 @@ class TelemetryRecord(BaseModel):
     vibration_rms: float | None = None
     pressure_bar: float | None = None
     current_a: float | None = None
+    source: str | None = None
+    source_context: dict[str, str | float | None] = Field(default_factory=dict)
 
 
 class PredictionResponse(BaseModel):
@@ -280,6 +295,14 @@ class PredictionModelsStatusResponse(BaseModel):
     anomaly: AnomalyModelStatusResponse
     failure: AnomalyModelStatusResponse
     rul: AnomalyModelStatusResponse
+    # Every equipment profile (pump, compressor, motor) with its three models.
+    profiles: dict[str, dict[str, AnomalyModelStatusResponse]] = Field(default_factory=dict)
+
+
+class IngestTargetResponse(BaseModel):
+    asset_id: str
+    asset_type: str
+    profile: str
 
 
 class DiagnosticRequest(BaseModel):

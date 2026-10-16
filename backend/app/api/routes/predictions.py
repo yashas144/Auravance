@@ -8,6 +8,7 @@ from app.models.schemas import (
 )
 from app.services.anomaly import anomaly_model_service
 from app.services.auth import auth_service
+from app.services.model_registry import MODELS
 from app.services.prediction import prediction_service
 from app.services.prognostics import failure_model_service, rul_model_service
 
@@ -29,6 +30,10 @@ def get_prediction_models_status(
         anomaly=anomaly_model_service.status(),
         failure=failure_model_service.status(),
         rul=rul_model_service.status(),
+        profiles={
+            profile: {"anomaly": models.anomaly.status(), "failure": models.failure.status(), "rul": models.rul.status()}
+            for profile, models in MODELS.items()
+        },
     )
 
 

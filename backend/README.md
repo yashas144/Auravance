@@ -26,6 +26,71 @@ uvicorn app.main:app --app-dir backend --reload
 python backend/scripts/simulate_telemetry.py
 ```
 
+## Real-Data Replay
+
+Streams real recorded machine data into the ingest API, as if the machines were
+live. Every registered asset gets the dataset that matches its type:
+
+| Asset types | Dataset | Real failures | Units |
+|---|---|---|---|
+| pump, cooling-system | Kaggle pump-sensor recording, 1-min readings | 7 breakdowns | anonymized |
+| compressor | [MetroPT-3](https://archive.ics.uci.edu/dataset/791/metropt+3+dataset) metro-train air compressor (UCI, CC BY 4.0), 5-min averages | 4 air leaks (operator report) | real: oil temperature degC, panel pressure bar, motor current A |
+| motor, drive, conveyor | NASA/IMS bearing run-to-failure rig (shaft driven by an AC motor at 2000 rpm), a 1-s vibration snapshot every 10 min | 3 bearing failures | real: worst-bearing vibration RMS in g |
+
+```bash
+python backend/scripts/replay_telemetry.py
+```
+
+- **Every registered asset streams by default** (`--assets all`). The replay reads
+  `GET /telemetry/ingest/targets` (asset id, type and profile) and re-checks it
+  every `--refresh-seconds` (default 60), so new or deleted assets are picked up
+  without a restart. Pass `--assets pump-04,compressor-17` to stream to specific assets.
+- Assets that share a dataset start at evenly spaced points in it, so the plant
+  shows machines in different real states at once.
+- Each tick sends one `POST /telemetry/ingest/batch` with a reading for every asset,
+  saved in a single transaction. By default it advances 5 recorded minutes every
+  2 s (rounded to each dataset's sampling: 1, 5 and 10 minutes). Tune with
+  `--minutes-per-tick`, `--interval`, `--episodes`, `--ticks`.
+- Readings are stamped with the current time. The original timestamp, raw values,
+  the dataset's ground-truth status (`NORMAL`, `BROKEN`, `RECOVERING`, `AIR_LEAK`,
+  `FAILED`), units and dataset name travel in `source_context`, and the dashboard
+  shows them next to the model output.
+- The replay waits for the API and retries with backoff if it goes down. It exits
+  only on errors a retry cannot fix (bad ingest key, unknown asset).
+
+### Preparing the datasets
+
+Replay files in `data/replay/` and the processed training files are committed.
+To rebuild them from the original sources:
+
+```bash
+# Pump: needs the Kaggle CSV processed by prepare_datasets.py
+python backend/scripts/build_replay_dataset.py
+# Compressor: download MetroPT-3 (208 MB zip) from UCI into data/raw/MetroPT3/
+python backend/scripts/prepare_metropt.py
+# Motor: the IMS .rar archives in data/interim/ims_bearings/extracted/, needs 7-Zip.
+# Extracts one test at a time (6.5 GB unpacked in total), caches features per test.
+python backend/scripts/prepare_ims.py
+```
+
+### Pump notes
+
+The pump channels are anonymized, so their units are unknown. The four modelled
+channels are rescaled with the transform saved in
+`artifacts/models/anomaly_isolation_forest.json`, so the anomaly model sees exactly
+the features it was trained on. The anomaly model flags about 95% of breakdown and
+recovery minutes. After each recovery, several hours stay flagged. This is correct:
+the dataset switches back to `NORMAL` while the pump is still idle.
+
+### Ingest security
+
+Set `AURAVANCE_INGEST_API_KEY` on the server to require a matching
+`X-Ingest-Key` header on `POST /telemetry/ingest`, `POST /telemetry/ingest/batch`
+and `GET /telemetry/ingest/targets`. The replay and simulator
+scripts read the same environment variable. When it is unset, ingest stays open
+for local development. Repeat alerts for a sustained condition are suppressed
+for `AURAVANCE_ALERT_COOLDOWN_SECONDS` (default 300) unless the severity changes.
+
 ## Current Scope
 
 - FastAPI application setup
@@ -196,7 +261,9 @@ If the artifact or its Python dependencies are unavailable, the API stays operat
 
 ## Train Failure Prediction And RUL Models
 
-Train the supervised AI4I failure classifier and NASA C-MAPSS RUL regressor from the repository root:
+Both models are trained on the pump-sensor recording (7 real breakdowns), using the
+anomaly model's feature transform, so all three models see the same features that
+live telemetry produces. Train from the repository root:
 
 ```powershell
 .\.venv\Scripts\python.exe backend\scripts\train_failure_model.py
@@ -209,9 +276,55 @@ Restart the API after training. Check all active prediction models at:
 GET /api/v1/predictions/models/status
 ```
 
-The failure output is a demo operating-window probability mapped to the dashboard's 72-hour field.
-The RUL model predicts capped C-MAPSS cycles and converts them to demo hours using two hours per cycle.
-Both adapters must be recalibrated when real equipment sensor semantics and duty-cycle history are available.
+- **Failure model** predicts P(pump is broken/recovering now, or breaks within 72 h).
+- **RUL model** predicts hours until the next breakdown, capped at 240 h (0 while down).
+- **Evaluation is leave-one-failure-out:** each failure cycle is scored by a model
+  trained without it. The results are stored in each model's `.json` metadata.
+  Failure model: AUC 0.66. RUL: MAE 64 h against 81 h for a constant guess.
+- **Honest limits:** with 4 sensors and 7 failures, the models clearly track the
+  pump's current state. Held-out P(fail) is about 0.89 when down and about 0.14 when
+  healthy, and RUL falls from about 180 h to about 22 h. Forecasting days ahead is
+  weak: the probability rises before only some failures (Jun 28, Jul 8, Jul 25)
+  and stays near the base rate before the others. Using all 51 sensors performed
+  worse (AUC 0.51), because the extra sensors drift between months.
+- **Out-of-fold serving:** each model file also stores the 8 held-out fold models.
+  Replayed readings (`source_context.dataset == "kaggle-pump-sensor"`) are scored
+  by the fold model that never saw that failure, so the replay never shows
+  memorised training data. These show as `...+heldout-N` in
+  `failure_model_version` and `rul_model_version`. Any other telemetry uses the
+  full model.
+
+## Compressor And Motor Models
+
+Each equipment profile has its own anomaly, failure and RUL models, trained on that
+machine type's real dataset in real units. Scoring picks the set from the asset type
+(`app/services/model_profiles.py`), and `GET /predictions/models/status` lists all of them.
+
+```bash
+python backend/scripts/train_profile_models.py compressor
+python backend/scripts/train_profile_models.py motor
+```
+
+Held-out results (leave-one-failure-out, stored in each model's `.json`):
+
+| | Compressor (MetroPT-3, 4 air leaks) | Motor (IMS, 3 bearing failures) |
+|---|---|---|
+| Anomaly: failure vs healthy AUC | 0.99 (1% false flags) | 0.98 (1% false flags) |
+| P(fail) when healthy / 1-3 days before / last 24 h / during failure | 0.08 / 0.06 / 0.06 / 0.33 | 0.22 / 0.42 / 0.78 / - |
+| RUL in the last 24 h | no warning (sudden) | 33 h (190 h when healthy) |
+
+- **Compressor air leaks are sudden.** The hours before a leak look like normal
+  running, so a 72 h forecast is not learnable from these sensors (AUC 0.45). The
+  models learn "leak in progress" instead (AUC 0.96) and add the empirical base
+  rate: P = P(leak now) + (1 - P(leak now)) x 6%, RUL = (1 - P(leak now)) x mean
+  healthy hours. See `app/services/ml_estimators.py`.
+- **Motor bearings degrade gradually.** Worst-bearing vibration climbs from about
+  0.10 g to 0.2-0.5 g over the final day, so the models learn the 72 h and
+  hours-to-failure targets directly.
+- **Known limitation: absolute baselines differ between machines.** IMS test 1
+  ran at about 0.11 g where tests 2 and 3 ran at about 0.08 g. A model that never
+  saw test 1 therefore rates it as already worn days before failure. Per-asset
+  baselines, learned from each machine's own healthy period, would fix this.
 
 ## New Master Data Endpoints
 

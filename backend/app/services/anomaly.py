@@ -32,8 +32,14 @@ class AnomalyInference:
     model_version: str
 
 
+def valid_feature_names(names: object) -> bool:
+    """Profiles may use any non-empty subset of the telemetry contract's features."""
+    return isinstance(names, list) and bool(names) and all(name in TELEMETRY_FIELDS for name in names)
+
+
 class AnomalyModelService:
-    def __init__(self) -> None:
+    def __init__(self, artifact_path: Path | None = None) -> None:
+        self._artifact_path = artifact_path
         self._artifact: dict[str, Any] | None = None
         self._load_error: str | None = None
         self._loaded_path: Path | None = None
@@ -41,7 +47,7 @@ class AnomalyModelService:
 
     @property
     def artifact_path(self) -> Path:
-        return Path(settings.anomaly_model_path)
+        return self._artifact_path or Path(settings.anomaly_model_path)
 
     def _load(self) -> dict[str, Any] | None:
         path = self.artifact_path
@@ -67,7 +73,7 @@ class AnomalyModelService:
                 artifact = joblib.load(path)
                 if artifact.get("artifact_schema_version") != 1:
                     raise ValueError("Unsupported anomaly model artifact schema.")
-                if artifact.get("feature_names") != FEATURE_NAMES:
+                if not valid_feature_names(artifact.get("feature_names")):
                     raise ValueError("Model feature contract does not match the API feature contract.")
                 self._artifact = artifact
             except Exception as exc:  # Model loading must not prevent API startup.
@@ -89,7 +95,7 @@ class AnomalyModelService:
         profile = artifact.get("runtime_profile", RUNTIME_PROFILE)
         transformed: list[float] = []
         deviations: dict[str, float] = {}
-        for feature_name in FEATURE_NAMES:
+        for feature_name in artifact["feature_names"]:
             config = profile[feature_name]
             raw_value = getattr(latest, TELEMETRY_FIELDS[feature_name])
             value = config["center"] if raw_value is None else float(raw_value)
@@ -119,16 +125,18 @@ class AnomalyModelService:
             label = "normal"
 
         dominant_signal = max(deviations.items(), key=lambda item: item[1])[0]
-        recent_pressure = [point.pressure_bar for point in telemetry if point.pressure_bar is not None]
-        if len(recent_pressure) >= 3 and max(recent_pressure) - min(recent_pressure) > 1.2:
-            dominant_signal = "pressure_instability"
-        elif (
-            latest.temperature_c is not None
-            and latest.temperature_c > 85.0
-            and latest.vibration_rms is not None
-            and latest.vibration_rms > 0.70
-        ):
-            dominant_signal = "bearing_pattern"
+        if artifact.get("profile", "pump") == "pump":
+            # Pattern rules tuned to the pump telemetry scale.
+            recent_pressure = [point.pressure_bar for point in telemetry if point.pressure_bar is not None]
+            if len(recent_pressure) >= 3 and max(recent_pressure) - min(recent_pressure) > 1.2:
+                dominant_signal = "pressure_instability"
+            elif (
+                latest.temperature_c is not None
+                and latest.temperature_c > 85.0
+                and latest.vibration_rms is not None
+                and latest.vibration_rms > 0.70
+            ):
+                dominant_signal = "bearing_pattern"
 
         return AnomalyInference(
             score=round(score, 3),

@@ -7,7 +7,7 @@ from typing import Any
 
 from app.core.config import settings
 from app.models.schemas import AnomalyModelStatusResponse, TelemetryRecord
-from app.services.anomaly import FEATURE_NAMES, RUNTIME_PROFILE, TELEMETRY_FIELDS
+from app.services.anomaly import FEATURE_NAMES, RUNTIME_PROFILE, TELEMETRY_FIELDS, valid_feature_names
 
 
 @dataclass(slots=True)
@@ -25,9 +25,10 @@ class RulInference:
 def _runtime_features(
     latest: TelemetryRecord,
     runtime_profile: dict[str, dict[str, float]],
+    feature_names: list[str] = FEATURE_NAMES,
 ) -> list[float]:
     values: list[float] = []
-    for feature_name in FEATURE_NAMES:
+    for feature_name in feature_names:
         config = runtime_profile[feature_name]
         raw_value = getattr(latest, TELEMETRY_FIELDS[feature_name])
         value = float(config["center"]) if raw_value is None else float(raw_value)
@@ -35,6 +36,23 @@ def _runtime_features(
             (value - float(config["center"])) / max(float(config["scale"]), 1e-9)
         )
     return values
+
+
+def _select_estimator(artifact: dict[str, Any], latest: TelemetryRecord) -> tuple[Any, str]:
+    """Pick the model that never saw this reading.
+
+    A replayed reading from the training recording is scored by the fold model
+    that held out its failure cycle, so the replay shows honest held-out
+    behaviour. Everything else (genuinely new data) uses the full model.
+    """
+    version = str(artifact["model_version"])
+    context = latest.source_context
+    recorded_at = context.get("source_timestamp")
+    if context.get("dataset") == artifact.get("fold_dataset") and isinstance(recorded_at, str):
+        for index, fold in enumerate(artifact.get("fold_models", [])):
+            if fold["held_out_start"] <= recorded_at <= fold["held_out_end"]:
+                return fold["estimator"], f"{version}+heldout-{index}"
+    return artifact["estimator"], version
 
 
 class _ArtifactService:
@@ -72,8 +90,10 @@ class _ArtifactService:
                     raise ValueError("Unsupported model artifact schema.")
                 if artifact.get("task") != self._expected_task:
                     raise ValueError("Model task does not match the inference service.")
-                if artifact.get("feature_names") != FEATURE_NAMES:
+                if not valid_feature_names(artifact.get("feature_names")):
                     raise ValueError("Model feature contract does not match live telemetry.")
+                if self._expected_task == "rul_regression" and artifact.get("target_unit") != "hours":
+                    raise ValueError("RUL artifact predates v2 (cycles); retrain with scripts/train_rul_model.py.")
                 self._artifact = artifact
             except Exception as exc:  # Keep the API available when an artifact is invalid.
                 self._load_error = f"Unable to load model artifact: {exc}"
@@ -105,43 +125,41 @@ class _ArtifactService:
 
 
 class FailureModelService(_ArtifactService):
-    def __init__(self) -> None:
-        super().__init__(settings.failure_model_path, "failure_classification", "rules-failure-v1")
+    def __init__(self, artifact_path: Path | str | None = None) -> None:
+        super().__init__(artifact_path or settings.failure_model_path, "failure_classification", "rules-failure-v1")
 
     def predict(self, telemetry: list[TelemetryRecord]) -> FailureInference | None:
         artifact = self._load()
         if artifact is None:
             return None
         features = _runtime_features(
-            telemetry[-1], artifact.get("runtime_profile", RUNTIME_PROFILE)
+            telemetry[-1], artifact.get("runtime_profile", RUNTIME_PROFILE), artifact["feature_names"]
         )
-        probability = float(artifact["estimator"].predict_proba([features])[0, 1])
+        estimator, model_version = _select_estimator(artifact, telemetry[-1])
+        probability = float(estimator.predict_proba([features])[0, 1])
         return FailureInference(
             probability=round(min(0.99, max(0.01, probability)), 4),
-            model_version=str(artifact["model_version"]),
+            model_version=model_version,
         )
 
 
 class RulModelService(_ArtifactService):
-    def __init__(self) -> None:
-        super().__init__(settings.rul_model_path, "rul_regression", "rules-rul-v1")
+    def __init__(self, artifact_path: Path | str | None = None) -> None:
+        super().__init__(artifact_path or settings.rul_model_path, "rul_regression", "rules-rul-v1")
 
     def predict(self, telemetry: list[TelemetryRecord]) -> RulInference | None:
         artifact = self._load()
         if artifact is None:
             return None
         features = _runtime_features(
-            telemetry[-1], artifact.get("runtime_profile", RUNTIME_PROFILE)
+            telemetry[-1], artifact.get("runtime_profile", RUNTIME_PROFILE), artifact["feature_names"]
         )
-        cycles = float(artifact["estimator"].predict([features])[0])
-        hours_per_cycle = float(artifact.get("hours_per_cycle", 2.0))
-        raw_hours = cycles * hours_per_cycle
-        # Constrain only out-of-domain extrapolation between C-MAPSS and the demo
-        # telemetry contract; ordinary model estimates remain unchanged.
-        severity = max(abs(value) for value in features)
-        safety_envelope_hours = 250.0 / (1.0 + 0.8 * severity)
-        hours = min(500.0, max(6.0, min(raw_hours, safety_envelope_hours)))
-        return RulInference(hours=round(hours, 1), model_version=str(artifact["model_version"]))
+        estimator, model_version = _select_estimator(artifact, telemetry[-1])
+        hours = float(estimator.predict([features])[0])
+        # The model predicts 0h while the pump is down; the API contract needs a
+        # positive value, so report at least 0.1h.
+        hours = min(float(artifact["rul_cap_hours"]), max(0.1, hours))
+        return RulInference(hours=round(hours, 1), model_version=model_version)
 
 
 failure_model_service = FailureModelService()

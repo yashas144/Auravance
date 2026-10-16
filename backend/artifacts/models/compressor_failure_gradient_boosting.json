@@ -1,0 +1,75 @@
+{
+  "artifact_schema_version": 1,
+  "profile": "compressor",
+  "trained_at": "2026-10-14T23:25:19.654951+00:00",
+  "source_dataset": "metropt3/metropt3_5min.csv",
+  "feature_names": [
+    "temperature",
+    "pressure",
+    "current"
+  ],
+  "telemetry_fields": [
+    "temperature_c",
+    "pressure_bar",
+    "current_a"
+  ],
+  "runtime_profile": {
+    "temperature": {
+      "center": 62.7333,
+      "scale": 8.9768
+    },
+    "pressure": {
+      "center": 8.9989,
+      "scale": 0.85845
+    },
+    "current": {
+      "center": 1.7496,
+      "scale": 3.7232
+    }
+  },
+  "failures": [
+    "2020-04-18 00:00:00",
+    "2020-05-29 23:30:00",
+    "2020-06-05 10:00:00",
+    "2020-07-15 14:30:00"
+  ],
+  "fold_dataset": "metropt-3",
+  "task": "failure_classification",
+  "model_version": "failure-hgb-compressor-v1.0.0",
+  "algorithm": "HistGradientBoostingClassifier",
+  "strategy": "sudden",
+  "target": "failure in progress now or within 72h",
+  "evaluation": "leave-one-failure-out",
+  "metrics": {
+    "loo_roc_auc": 0.4497,
+    "loo_average_precision": 0.153,
+    "loo_failure_in_progress_roc_auc": 0.9595,
+    "positive_rate": 0.0812,
+    "loo_mean_probability_down": 0.3282,
+    "loo_mean_probability_under_24h": 0.0612,
+    "loo_mean_probability_24_to_72h": 0.0622,
+    "loo_mean_probability_over_72h": 0.0783
+  },
+  "fold_held_out_ranges": [
+    [
+      "2020-02-01 00:00:00",
+      "2020-04-18 23:55:00"
+    ],
+    [
+      "2020-04-19 00:00:00",
+      "2020-05-30 06:00:00"
+    ],
+    [
+      "2020-05-30 06:05:00",
+      "2020-06-07 14:15:00"
+    ],
+    [
+      "2020-06-08 11:45:00",
+      "2020-07-15 19:00:00"
+    ],
+    [
+      "2020-07-15 19:05:00",
+      "2020-09-01 03:55:00"
+    ]
+  ]
+}

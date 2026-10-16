@@ -8,7 +8,7 @@ import secrets
 import time
 from datetime import UTC, datetime
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, Header, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.core.config import settings
@@ -115,3 +115,11 @@ def get_bearer_token(
     if credentials is None or credentials.scheme.lower() != "bearer":
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required.")
     return credentials.credentials
+
+
+def require_ingest_key(x_ingest_key: str | None = Header(default=None)) -> None:
+    expected = settings.ingest_api_key
+    if not expected:
+        return
+    if not x_ingest_key or not secrets.compare_digest(x_ingest_key, expected):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or missing ingest key.")
