@@ -3,8 +3,8 @@ from __future__ import annotations
 from statistics import mean
 
 from app.models.schemas import PredictionResponse, TelemetryRecord
-from app.services.anomaly import anomaly_model_service
-from app.services.prognostics import failure_model_service, rul_model_service
+from app.services.model_profiles import profile_for_asset
+from app.services.model_registry import models_for
 
 
 def _normalize(value: float | None, low: float, high: float) -> float:
@@ -24,7 +24,8 @@ def _trend_bonus(values: list[float]) -> float:
     return min(0.2, rising_steps / max(1, len(values) - 1) * 0.2)
 
 
-def score_asset(asset_id: str, telemetry: list[TelemetryRecord]) -> PredictionResponse:
+def score_asset(asset_id: str, telemetry: list[TelemetryRecord], profile: str | None = None) -> PredictionResponse:
+    models = models_for(profile or profile_for_asset(asset_id))
     latest = telemetry[-1]
     temp_score = _normalize(latest.temperature_c, 70.0, 95.0)
     vibration_score = _normalize(latest.vibration_rms, 0.45, 1.2)
@@ -35,7 +36,7 @@ def score_asset(asset_id: str, telemetry: list[TelemetryRecord]) -> PredictionRe
         1.0,
         temp_score * 0.3 + vibration_score * 0.35 + pressure_score * 0.15 + current_score * 0.2,
     )
-    model_inference = anomaly_model_service.predict(telemetry)
+    model_inference = models.anomaly.predict(telemetry)
     anomaly_score = model_inference.score if model_inference else rules_anomaly_score
     temp_trend = _trend_bonus([point.temperature_c for point in telemetry if point.temperature_c is not None])
     vibration_trend = _trend_bonus(
@@ -44,12 +45,12 @@ def score_asset(asset_id: str, telemetry: list[TelemetryRecord]) -> PredictionRe
     rules_failure_probability = min(
         0.98, 0.1 + anomaly_score * 0.7 + temp_trend + vibration_trend
     )
-    failure_inference = failure_model_service.predict(telemetry)
+    failure_inference = models.failure.predict(telemetry)
     failure_probability = (
         failure_inference.probability if failure_inference else rules_failure_probability
     )
     rules_rul_hours = max(12.0, round(240.0 * (1.0 - failure_probability), 1))
-    rul_inference = rul_model_service.predict(telemetry)
+    rul_inference = models.rul.predict(telemetry)
     estimated_rul_hours = rul_inference.hours if rul_inference else rules_rul_hours
 
     dominant_signal = max(

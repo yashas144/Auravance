@@ -1,0 +1,54 @@
+{
+  "artifact_schema_version": 1,
+  "profile": "motor",
+  "trained_at": "2026-10-14T23:39:16.687315+00:00",
+  "source_dataset": "ims_bearings/ims_features.csv",
+  "feature_names": [
+    "vibration"
+  ],
+  "telemetry_fields": [
+    "vibration_rms"
+  ],
+  "runtime_profile": {
+    "vibration": {
+      "center": 0.08026,
+      "scale": 0.02185
+    }
+  },
+  "failures": [
+    "2003-11-25 23:39:56",
+    "2004-02-19 06:22:39",
+    "2004-04-18 02:42:55"
+  ],
+  "fold_dataset": "ims-bearings",
+  "task": "rul_regression",
+  "model_version": "rul-hgb-motor-v1.0.0",
+  "algorithm": "HistGradientBoostingRegressor",
+  "strategy": "degradation",
+  "target": "hours until the next failure, capped at 240h; 0 during a failure",
+  "target_unit": "hours",
+  "rul_cap_hours": 240.0,
+  "evaluation": "leave-one-failure-out",
+  "metrics": {
+    "loo_mae_hours": 59.58,
+    "constant_baseline_mae_hours": 62.4,
+    "loo_mean_prediction_hours_down": 151.3,
+    "loo_mean_prediction_hours_under_24h": 32.8,
+    "loo_mean_prediction_hours_24_to_72h": 142.2,
+    "loo_mean_prediction_hours_over_72h": 189.6
+  },
+  "fold_held_out_ranges": [
+    [
+      "2003-10-22 12:06:24",
+      "2003-11-25 23:39:56"
+    ],
+    [
+      "2004-02-12 10:32:39",
+      "2004-02-19 06:22:39"
+    ],
+    [
+      "2004-03-04 09:27:46",
+      "2004-04-18 02:42:55"
+    ]
+  ]
+}

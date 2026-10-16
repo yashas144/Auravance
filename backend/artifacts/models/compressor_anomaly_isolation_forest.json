@@ -1,0 +1,52 @@
+{
+  "artifact_schema_version": 1,
+  "profile": "compressor",
+  "trained_at": "2026-10-14T23:25:19.654951+00:00",
+  "source_dataset": "metropt3/metropt3_5min.csv",
+  "feature_names": [
+    "temperature",
+    "pressure",
+    "current"
+  ],
+  "telemetry_fields": [
+    "temperature_c",
+    "pressure_bar",
+    "current_a"
+  ],
+  "runtime_profile": {
+    "temperature": {
+      "center": 62.7333,
+      "scale": 8.9768
+    },
+    "pressure": {
+      "center": 8.9989,
+      "scale": 0.85845
+    },
+    "current": {
+      "center": 1.7496,
+      "scale": 3.7232
+    }
+  },
+  "failures": [
+    "2020-04-18 00:00:00",
+    "2020-05-29 23:30:00",
+    "2020-06-05 10:00:00",
+    "2020-07-15 14:30:00"
+  ],
+  "fold_dataset": "metropt-3",
+  "model_version": "isolation-forest-compressor-v1.0.0",
+  "algorithm": "IsolationForest",
+  "thresholds": {
+    "warning": 0.15887048366807063,
+    "high": 0.26491704466652144
+  },
+  "score_calibration": {
+    "healthy_center": -0.0334909930655376,
+    "observed_max": 0.2649180446665214
+  },
+  "metrics": {
+    "down_vs_healthy_roc_auc": 0.9859,
+    "healthy_flag_rate": 0.01,
+    "down_flag_rate": 0.4147
+  }
+}
